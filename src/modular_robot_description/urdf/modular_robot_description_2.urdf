@@ -1,0 +1,988 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="modular_robot_description_2">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="1.11022302462516E-16 0.00657694398570483 -0.00114479574614862"
+        rpy="0 0 0" />
+      <mass
+        value="0.000392699081698724" />
+      <inertia
+        ixx="3.27249234748937E-09"
+        ixy="4.39758261498778E-57"
+        ixz="-9.48598062533625E-42"
+        iyy="3.27249234748937E-09"
+        iyz="1.69119590752017E-25"
+        izz="4.90873852123405E-09" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="frame">
+    <inertial>
+      <origin
+        xyz="-1.0322E-16 -3.7883E-16 4.3368E-19"
+        rpy="0 0 0" />
+      <mass
+        value="23.2" />
+      <inertia
+        ixx="3.8765"
+        ixy="-8.1456E-16"
+        ixz="-1.0334E-16"
+        iyy="2.3443"
+        iyz="3.5216E-17"
+        izz="6.1745" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/frame.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 1 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/frame.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="frame_joint"
+    type="fixed">
+    <origin
+      xyz="0 0.00657694398570483 -0.00114479574614862"
+      rpy="0 0 -1.5707963267949" />
+    <parent
+      link="base_link" />
+    <child
+      link="frame" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="fl_extending_arm">
+    <inertial>
+      <origin
+        xyz="0 0.015196 0.31882"
+        rpy="0 0 0" />
+      <mass
+        value="4.1526" />
+      <inertia
+        ixx="0.10727"
+        ixy="1.2883E-19"
+        ixz="-1.6853E-19"
+        iyy="0.10304"
+        iyz="0.00028951"
+        izz="0.0085908" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/fl_extending_arm.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/fl_extending_arm.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="fl_extending_arm_joint"
+    type="prismatic">
+    <origin
+      xyz="0.45 0 0"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="frame" />
+    <child
+      link="fl_extending_arm" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-0.4"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="fl_elevating_arm">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.0003927" />
+      <inertia
+        ixx="3.2725E-09"
+        ixy="-1.7424E-56"
+        ixz="9.486E-42"
+        iyy="3.2725E-09"
+        iyz="-2.0019E-43"
+        izz="4.9087E-09" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/fl_elevating_arm.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/fl_elevating_arm.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="fl_elevating_arm_joint"
+    type="prismatic">
+    <origin
+      xyz="0 -0.018645 0.55"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="fl_extending_arm" />
+    <child
+      link="fl_elevating_arm" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-0.3"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="fl_steering_arm">
+    <inertial>
+      <origin
+        xyz="0 0 0.35077"
+        rpy="0 0 0" />
+      <mass
+        value="1.3754" />
+      <inertia
+        ixx="0.033778"
+        ixy="-2.1923E-19"
+        ixz="-2.3982E-18"
+        iyy="0.034477"
+        iyz="1.1899E-18"
+        izz="0.0047687" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/fl_steering_arm.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 1 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/fl_steering_arm.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="fl_steering_arm_joint"
+    type="continuous">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="fl_elevating_arm" />
+    <child
+      link="fl_steering_arm" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="fl_wheel">
+    <inertial>
+      <origin
+        xyz="0 0 -1.1102E-16"
+        rpy="0 0 0" />
+      <mass
+        value="1.5928" />
+      <inertia
+        ixx="0.0042968"
+        ixy="-2.0997E-39"
+        ixz="-4.2352E-22"
+        iyy="0.0042968"
+        iyz="-7.6647E-36"
+        izz="0.0078551" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/fl_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/fl_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="fl_motor"
+    type="continuous">
+    <origin
+      xyz="0 0 0.5325"
+      rpy="1.5708 0 0" />
+    <parent
+      link="fl_steering_arm" />
+    <child
+      link="fl_wheel" />
+    <axis
+      xyz="0 0 -1" />
+  </joint>
+  <link
+    name="fr_extending_arm">
+    <inertial>
+      <origin
+        xyz="-4.7508E-09 -0.015196 0.31882"
+        rpy="0 0 0" />
+      <mass
+        value="4.1526" />
+      <inertia
+        ixx="0.10727"
+        ixy="4.314E-12"
+        ixz="1.4704E-09"
+        iyy="0.10304"
+        iyz="-0.00028951"
+        izz="0.0085908" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/fr_extending_arm.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/fr_extending_arm.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="fr_extending_arm_joint"
+    type="prismatic">
+    <origin
+      xyz="0.45 0 0"
+      rpy="1.5708 0 0" />
+    <parent
+      link="frame" />
+    <child
+      link="fr_extending_arm" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0.4"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="fr_elevating_arm">
+    <inertial>
+      <origin
+        xyz="0 0 -3.4694E-18"
+        rpy="0 0 0" />
+      <mass
+        value="0.0003927" />
+      <inertia
+        ixx="3.2725E-09"
+        ixy="-4.1575E-57"
+        ixz="-9.2449E-42"
+        iyy="3.2725E-09"
+        iyz="-3.4142E-25"
+        izz="4.9087E-09" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/fr_elevating_arm.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/fr_elevating_arm.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="fr_elevating_arm_joint"
+    type="prismatic">
+    <origin
+      xyz="0 0.018645 0.55"
+      rpy="1.5708 0 0" />
+    <parent
+      link="fr_extending_arm" />
+    <child
+      link="fr_elevating_arm" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-0.3"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="fr_steering_arm">
+    <inertial>
+      <origin
+        xyz="0 0 0.35077"
+        rpy="0 0 0" />
+      <mass
+        value="1.3754" />
+      <inertia
+        ixx="0.033778"
+        ixy="-6.4514E-19"
+        ixz="9.7764E-19"
+        iyy="0.034477"
+        iyz="5.5732E-18"
+        izz="0.0047687" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/fr_steering_arm.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 1 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/fr_steering_arm.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="fr_steering_arm_joint"
+    type="continuous">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="fr_elevating_arm" />
+    <child
+      link="fr_steering_arm" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="fr_wheel">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="1.5928" />
+      <inertia
+        ixx="0.0042968"
+        ixy="2.0997E-39"
+        ixz="4.2352E-22"
+        iyy="0.0042968"
+        iyz="-7.6647E-36"
+        izz="0.0078551" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/fr_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/fr_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="fr_motor"
+    type="continuous">
+    <origin
+      xyz="0 0 0.5325"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="fr_steering_arm" />
+    <child
+      link="fr_wheel" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="rr_extending_arm">
+    <inertial>
+      <origin
+        xyz="0 -0.015196 0.31882"
+        rpy="0 0 0" />
+      <mass
+        value="4.1526" />
+      <inertia
+        ixx="0.10727"
+        ixy="-1.1172E-19"
+        ixz="1.6853E-19"
+        iyy="0.10304"
+        iyz="-0.00028951"
+        izz="0.0085908" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/rr_extending_arm.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/rr_extending_arm.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rr_extending_arm_joint"
+    type="prismatic">
+    <origin
+      xyz="-0.45 -0.032017 0"
+      rpy="1.5708 0 0" />
+    <parent
+      link="frame" />
+    <child
+      link="rr_extending_arm" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0.4"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="rr_elevating_arm">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.0003927" />
+      <inertia
+        ixx="3.2725E-09"
+        ixy="1.5306E-41"
+        ixz="-1.2825E-41"
+        iyy="3.2725E-09"
+        iyz="-6.8932E-26"
+        izz="4.9087E-09" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/rr_elevating_arm.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/rr_elevating_arm.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rr_elevating_arm_joint"
+    type="prismatic">
+    <origin
+      xyz="0 0.018645 0.55"
+      rpy="1.5708 0 0" />
+    <parent
+      link="rr_extending_arm" />
+    <child
+      link="rr_elevating_arm" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-0.3"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="rr_steering_arm">
+    <inertial>
+      <origin
+        xyz="0 0 0.35077"
+        rpy="0 0 0" />
+      <mass
+        value="1.3754" />
+      <inertia
+        ixx="0.033778"
+        ixy="-5.5396E-18"
+        ixz="-6.5306E-18"
+        iyy="0.034477"
+        iyz="-5.4585E-18"
+        izz="0.0047687" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/rr_steering_arm.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 1 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/rr_steering_arm.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rr_steering_arm_joint"
+    type="continuous">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="rr_elevating_arm" />
+    <child
+      link="rr_steering_arm" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="rr_wheel">
+    <inertial>
+      <origin
+        xyz="0 0 -1.1102E-16"
+        rpy="0 0 0" />
+      <mass
+        value="1.5928" />
+      <inertia
+        ixx="0.0042968"
+        ixy="-2.0997E-39"
+        ixz="1.6522E-19"
+        iyy="0.0042968"
+        iyz="7.6647E-36"
+        izz="0.0078551" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/rr_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/rr_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rr_motor"
+    type="continuous">
+    <origin
+      xyz="0 0 0.5325"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="rr_steering_arm" />
+    <child
+      link="rr_wheel" />
+    <axis
+      xyz="0 0 -1" />
+  </joint>
+  <link
+    name="rl_extending_arm">
+    <inertial>
+      <origin
+        xyz="0 0.015196 0.31882"
+        rpy="0 0 0" />
+      <mass
+        value="4.1526" />
+      <inertia
+        ixx="0.10727"
+        ixy="1.2883E-19"
+        ixz="-1.6853E-19"
+        iyy="0.10304"
+        iyz="0.00028951"
+        izz="0.0085908" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/rl_extending_arm.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/rl_extending_arm.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rl_extending_arm_joint"
+    type="prismatic">
+    <origin
+      xyz="-0.45 0 0"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="frame" />
+    <child
+      link="rl_extending_arm" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-0.4"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="rl_elevating_arm">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.0003927" />
+      <inertia
+        ixx="3.2725E-09"
+        ixy="7.653E-42"
+        ixz="1.2825E-41"
+        iyy="3.2725E-09"
+        iyz="6.8932E-26"
+        izz="4.9087E-09" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/rl_elevating_arm.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/rl_elevating_arm.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rl_elevating_arm_joint"
+    type="prismatic">
+    <origin
+      xyz="0 -0.018645 0.55"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="rl_extending_arm" />
+    <child
+      link="rl_elevating_arm" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-0.3"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="rl_steering_arm">
+    <inertial>
+      <origin
+        xyz="0 0 0.35077"
+        rpy="0 0 0" />
+      <mass
+        value="1.3754" />
+      <inertia
+        ixx="0.033778"
+        ixy="-4.6691E-19"
+        ixz="4.5013E-18"
+        iyy="0.034477"
+        iyz="-6.9143E-18"
+        izz="0.0047687" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/rl_steering_arm.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 1 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/rl_steering_arm.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rl_steering_arm_joint"
+    type="continuous">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="rl_elevating_arm" />
+    <child
+      link="rl_steering_arm" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="rl_wheel">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="1.5928" />
+      <inertia
+        ixx="0.0042968"
+        ixy="-2.0997E-39"
+        ixz="-4.2352E-22"
+        iyy="0.0042968"
+        iyz="-7.6647E-36"
+        izz="0.0078551" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/rl_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://modular_robot_description/meshes/visual/rl_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rl_motor"
+    type="continuous">
+    <origin
+      xyz="0 0 0.5325"
+      rpy="1.5708 0 0" />
+    <parent
+      link="rl_steering_arm" />
+    <child
+      link="rl_wheel" />
+    <axis
+      xyz="0 0 -1" />
+  </joint>
+</robot>

@@ -1,0 +1,12 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/ebrahim/modular_robot_simulator/build/modular_robot_description",
+        "/home/ebrahim/modular_robot_simulator/install/modular_robot_description/lib/python3.12/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/ebrahim/modular_robot_simulator/build/modular_robot_description",
+        "/home/ebrahim/modular_robot_simulator/install/modular_robot_description/lib/python3.12/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ]
+}
