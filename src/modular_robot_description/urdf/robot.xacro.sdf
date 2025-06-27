@@ -1,4 +1,5 @@
-<sdf version="1.11">
+<?xml version="1.0" ?>
+<sdf version="1.11" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <model name="modular_robot_description_2">
     <link name="base_link">
       <inertial>
@@ -98,8 +99,6 @@
         <limit>
           <lower>-0.40000000000000002</lower>
           <upper>0</upper>
-          <effort>0</effort>
-          <velocity>0</velocity>
         </limit>
         <dynamics>
           <spring_reference>0</spring_reference>
@@ -153,8 +152,6 @@
         <limit>
           <lower>-0.29999999999999999</lower>
           <upper>0</upper>
-          <effort>0</effort>
-          <velocity>0</velocity>
         </limit>
         <dynamics>
           <spring_reference>0</spring_reference>
@@ -314,8 +311,6 @@
         <limit>
           <lower>0</lower>
           <upper>0.40000000000000002</upper>
-          <effort>0</effort>
-          <velocity>0</velocity>
         </limit>
         <dynamics>
           <spring_reference>0</spring_reference>
@@ -369,8 +364,6 @@
         <limit>
           <lower>-0.29999999999999999</lower>
           <upper>0</upper>
-          <effort>0</effort>
-          <velocity>0</velocity>
         </limit>
         <dynamics>
           <spring_reference>0</spring_reference>
@@ -530,8 +523,6 @@
         <limit>
           <lower>-0.40000000000000002</lower>
           <upper>0</upper>
-          <effort>0</effort>
-          <velocity>0</velocity>
         </limit>
         <dynamics>
           <spring_reference>0</spring_reference>
@@ -585,8 +576,6 @@
         <limit>
           <lower>-0.29999999999999999</lower>
           <upper>0</upper>
-          <effort>0</effort>
-          <velocity>0</velocity>
         </limit>
         <dynamics>
           <spring_reference>0</spring_reference>
@@ -746,8 +735,6 @@
         <limit>
           <lower>0</lower>
           <upper>0.40000000000000002</upper>
-          <effort>0</effort>
-          <velocity>0</velocity>
         </limit>
         <dynamics>
           <spring_reference>0</spring_reference>
@@ -801,8 +788,6 @@
         <limit>
           <lower>-0.29999999999999999</lower>
           <upper>0</upper>
-          <effort>0</effort>
-          <velocity>0</velocity>
         </limit>
         <dynamics>
           <spring_reference>0</spring_reference>

@@ -46,7 +46,7 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time')
     bringup_dir = get_package_share_directory('modular_robot_description')
     world = os.path.join(bringup_dir , "world", "depot.sdf")
-    sdf_file  =  os.path.join(bringup_dir, 'urdf', 'robot.sdf')
+    sdf_file  =  os.path.join(bringup_dir, 'urdf', 'robot.xacro.sdf')
     with open(sdf_file, 'r') as infp:
         robot_desc = infp.read()
 
