@@ -156,6 +156,7 @@
         <dynamics>
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
+          <damping>10</damping>
         </dynamics>
       </axis>
     </joint>
@@ -368,6 +369,7 @@
         <dynamics>
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
+          <damping>10</damping>
         </dynamics>
       </axis>
     </joint>
@@ -578,6 +580,7 @@
           <upper>0</upper>
         </limit>
         <dynamics>
+          <damping>10</damping>
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
         </dynamics>
@@ -790,6 +793,7 @@
           <upper>0</upper>
         </limit>
         <dynamics>
+          <damping>10</damping>
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
         </dynamics>
@@ -938,5 +942,45 @@
         </material>
       </visual>
     </link>
+    <plugin
+      filename="gz-sim-joint-position-controller-system"
+      name="gz::sim::systems::JointPositionController">
+      <joint_name>fr_elevating_arm_joint</joint_name>
+      <topic>topic1_name</topic>
+      <p_gain>1000</p_gain>
+    </plugin>
+
+    <plugin
+      filename="gz-sim-joint-position-controller-system"
+      name="gz::sim::systems::JointPositionController">
+      <joint_name>fl_elevating_arm_joint</joint_name>
+      <topic>topic2_name</topic>
+      <p_gain>1000</p_gain>
+    </plugin>
+
+
+    <plugin
+      filename="gz-sim-joint-position-controller-system"
+      name="gz::sim::systems::JointPositionController">
+      <joint_name>rr_elevating_arm_joint</joint_name>
+      <topic>topic3_name</topic>
+      <p_gain>1000</p_gain>
+    </plugin>
+
+
+    <plugin
+      filename="gz-sim-joint-position-controller-system"
+      name="gz::sim::systems::JointPositionController">
+      <joint_name>rl_elevating_arm_joint</joint_name>
+      <topic>topic4_name</topic>
+      <p_gain>1000</p_gain>
+    </plugin>
+
+    <plugin
+      filename="gz-sim-joint-state-publisher-system"
+      name="gz::sim::systems::JointStatePublisher">
+      <topic>joints_feedback</topic>
+    </plugin>
+
   </model>
 </sdf>
