@@ -101,7 +101,7 @@
           <upper>0</upper>
         </limit>
         <dynamics>
-          <damping>10</damping>
+          <damping>50</damping>
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
         </dynamics>
@@ -153,11 +153,12 @@
         <limit>
           <lower>-0.29999999999999999</lower>
           <upper>0</upper>
+          <velocity>0.05</velocity>
         </limit>
         <dynamics>
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
-          <damping>10</damping>
+          <damping>50</damping>
         </dynamics>
       </axis>
     </joint>
@@ -209,7 +210,7 @@
           <upper>inf</upper>
         </limit>
         <dynamics>
-          <damping>10</damping>
+          <damping>50</damping>
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
         </dynamics>
@@ -316,7 +317,7 @@
           <upper>0.40000000000000002</upper>
         </limit>
         <dynamics>
-          <damping>10</damping>
+          <damping>50</damping>
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
         </dynamics>
@@ -368,11 +369,12 @@
         <limit>
           <lower>-0.29999999999999999</lower>
           <upper>0</upper>
+          <velocity>0.05</velocity>
         </limit>
         <dynamics>
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
-          <damping>10</damping>
+          <damping>50</damping>
         </dynamics>
       </axis>
     </joint>
@@ -424,7 +426,7 @@
           <upper>inf</upper>
         </limit>
         <dynamics>
-          <damping>10</damping>
+          <damping>50</damping>
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
         </dynamics>
@@ -531,7 +533,7 @@
           <upper>0</upper>
         </limit>
         <dynamics>
-          <damping>10</damping>
+          <damping>50</damping>
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
         </dynamics>
@@ -583,9 +585,10 @@
         <limit>
           <lower>-0.29999999999999999</lower>
           <upper>0</upper>
+          <velocity>0.05</velocity>
         </limit>
         <dynamics>
-          <damping>10</damping>
+          <damping>50</damping>
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
         </dynamics>
@@ -639,7 +642,7 @@
           <upper>inf</upper>
         </limit>
         <dynamics>
-          <damping>10</damping>
+          <damping>50</damping>
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
         </dynamics>
@@ -746,7 +749,7 @@
           <upper>0.40000000000000002</upper>
         </limit>
         <dynamics>
-          <damping>10</damping>
+          <damping>50</damping>
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
         </dynamics>
@@ -798,9 +801,10 @@
         <limit>
           <lower>-0.29999999999999999</lower>
           <upper>0</upper>
+          <velocity>0.05</velocity>
         </limit>
         <dynamics>
-          <damping>10</damping>
+          <damping>50</damping>
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
         </dynamics>
@@ -854,7 +858,7 @@
           <upper>inf</upper>
         </limit>
         <dynamics>
-          <damping>10</damping>
+          <damping>50</damping>
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
         </dynamics>
@@ -955,7 +959,9 @@
       name="gz::sim::systems::JointPositionController">
       <joint_name>fr_elevating_arm_joint</joint_name>
       <topic>fr_elevating_pos_arm_joint</topic>
-      <p_gain>400</p_gain>
+      <p_gain>5000</p_gain>
+      <i_gain>500</i_gain>
+      <d_gain>100</d_gain>
     </plugin>
 
     <plugin
@@ -963,7 +969,9 @@
       name="gz::sim::systems::JointPositionController">
       <joint_name>fl_elevating_arm_joint</joint_name>
       <topic>fl_elevating_pos_arm_joint</topic>
-      <p_gain>400</p_gain>
+      <p_gain>5000</p_gain>
+      <i_gain>500</i_gain>
+      <d_gain>100</d_gain>
     </plugin>
 
     <plugin
@@ -971,7 +979,9 @@
       name="gz::sim::systems::JointPositionController">
       <joint_name>rr_elevating_arm_joint</joint_name>
       <topic>rr_elevating_pos_arm_joint</topic>
-      <p_gain>400</p_gain>
+      <p_gain>5000</p_gain>
+      <i_gain>500</i_gain>
+      <d_gain>100</d_gain>
     </plugin>
 
     <plugin
@@ -979,7 +989,9 @@
       name="gz::sim::systems::JointPositionController">
       <joint_name>rl_elevating_arm_joint</joint_name>
       <topic>rl_elevating_pos_arm_joint</topic>
-      <p_gain>400</p_gain>
+      <p_gain>5000</p_gain>
+      <i_gain>500</i_gain>
+      <d_gain>100</d_gain>
     </plugin>
 
     <plugin
