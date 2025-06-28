@@ -26,37 +26,122 @@
   gz_type_name: "gz.msgs.Pose_V"
   direction: GZ_TO_ROS
 
-# gz topic subscribed to by DiffDrive plugin
-- ros_topic_name: "cmd_vel"
-  gz_topic_name: "cmd_vel"
-  ros_type_name: "geometry_msgs/msg/Twist"
-  gz_type_name: "gz.msgs.Twist"
-  direction: ROS_TO_GZ
-
-# gz topic published by IMU plugin
-- ros_topic_name: "imu"
-  gz_topic_name: "imu"
-  ros_type_name: "sensor_msgs/msg/Imu"
-  gz_type_name: "gz.msgs.IMU"
-  direction: GZ_TO_ROS
-
-- ros_topic_name: "/scan"
-  gz_topic_name: "/scan"
-  ros_type_name: "sensor_msgs/msg/LaserScan"
-  gz_type_name: "gz.msgs.LaserScan"
-  direction: GZ_TO_ROS
-
-# gz topic published by Sensors plugin
-- ros_topic_name: "/rgb_image"
-  gz_topic_name: "/rgb_image"
-  ros_type_name: "sensor_msgs/msg/Image"
-  gz_type_name: "gz.msgs.Image"
-  direction: GZ_TO_ROS
-  
-
 # gz topic published by Sensors plugin (Camera)
 - ros_topic_name: "camera/camera_info"
   gz_topic_name: "camera/camera_info"
   ros_type_name: "sensor_msgs/msg/CameraInfo"
   gz_type_name: "gz.msgs.CameraInfo"
   direction: GZ_TO_ROS
+
+# gz topic for controlling the robot's joints
+- ros_topic_name: "/fl_steering_pos_arm_joint"
+  gz_topic_name: "/fl_steering_pos_arm_joint"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+# gz topic for controlling the robot's joints
+- ros_topic_name: "/fr_steering_pos_arm_joint"
+  gz_topic_name: "/fr_steering_pos_arm_joint"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+# gz topic for controlling the robot's joints
+- ros_topic_name: "/rr_steering_pos_arm_joint"
+  gz_topic_name: "/rr_steering_pos_arm_joint"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+# gz topic for controlling the robot's joints
+- ros_topic_name: "/rl_steering_pos_arm_joint"
+  gz_topic_name: "/rl_steering_pos_arm_joint"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ  
+
+# gz topic for controlling the robot's joints
+- ros_topic_name: "/fl_extending_pos_arm_joint"
+  gz_topic_name: "/fl_extending_pos_arm_joint"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+# gz topic for controlling the robot's joints
+- ros_topic_name: "/fr_extending_pos_arm_joint"
+  gz_topic_name: "/fr_extending_pos_arm_joint"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+# gz topic for controlling the robot's joints
+- ros_topic_name: "/rr_extending_pos_arm_joint"
+  gz_topic_name: "/rr_extending_pos_arm_joint"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+# gz topic for controlling the robot's joints
+- ros_topic_name: "/rl_extending_pos_arm_joint"
+  gz_topic_name: "/rl_extending_pos_arm_joint"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+# gz topic for controlling the robot's joints
+- ros_topic_name: "/fl_elevating_pos_arm_joint"
+  gz_topic_name: "/fl_elevating_pos_arm_joint"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+# gz topic for controlling the robot's joints
+- ros_topic_name: "/fr_elevating_pos_arm_joint"
+  gz_topic_name: "/fr_elevating_pos_arm_joint"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+# gz topic for controlling the robot's joints
+- ros_topic_name: "/rr_elevating_pos_arm_joint"
+  gz_topic_name: "/rr_elevating_pos_arm_joint"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+# gz topic for controlling the robot's joints
+- ros_topic_name: "/rl_elevating_pos_arm_joint"
+  gz_topic_name: "/rl_elevating_pos_arm_joint"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+# gz topic for controlling the robot's joints
+- ros_topic_name: "fr_motor_vel"
+  gz_topic_name: "fr_motor_vel"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+# gz topic for controlling the robot's joints
+- ros_topic_name: "fl_motor_vel"
+  gz_topic_name: "fl_motor_vel"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+# gz topic for controlling the robot's joints
+- ros_topic_name: "rr_motor_vel"
+  gz_topic_name: "rr_motor_vel"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+# gz topic for controlling the robot's joints
+- ros_topic_name: "rl_motor_vel"
+  gz_topic_name: "rl_motor_vel"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+  
