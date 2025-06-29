@@ -28,6 +28,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'robot_control = modular_robot_description.robot_control:main',
         ],
     },
 )
