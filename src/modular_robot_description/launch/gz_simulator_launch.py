@@ -86,6 +86,14 @@ def generate_launch_description():
         output='screen'
     )
 
+    robot_control = Node(
+        package='modular_robot_description',
+        executable='robot_control',
+        name='robot_control',
+        output='screen',
+        parameters=[{'use_sim_time': True}],
+    )
+
     if has_nvidia_gpu(): #check if the gpu is nvidia to export the following variables to make simulation work on gpu
         nvidia_prime = SetEnvironmentVariable(
         name='__NV_PRIME_RENDER_OFFLOAD',
@@ -146,6 +154,6 @@ def generate_launch_description():
     ld.add_action(start_robot_state_publisher_cmd)
     ld.add_action(tf_map)
     ld.add_action(joint_state_publisher)
-
+    ld.add_action(robot_control)
     # Launch!
     return ld
