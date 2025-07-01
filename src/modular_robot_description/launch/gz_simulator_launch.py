@@ -44,8 +44,9 @@ def generate_launch_description():
     urdf_file= LaunchConfiguration('urdf_file')
     # Check if we're told to use sim time
     use_sim_time = LaunchConfiguration('use_sim_time')
+    Pkg_directory = get_package_share_directory('virtual_maize_field') #this is the package name that contains the models
     bringup_dir = get_package_share_directory('modular_robot_description')
-    world = os.path.join(bringup_dir , "world", "depot.sdf")
+    world = os.path.join(bringup_dir , "world", "generated.world")
     sdf_file  =  os.path.join(bringup_dir, 'urdf', 'robot.xacro.sdf')
     with open(sdf_file, 'r') as infp:
         robot_desc = infp.read()
@@ -63,8 +64,18 @@ def generate_launch_description():
     gz_resource_path = SetEnvironmentVariable(
         name='GZ_SIM_RESOURCE_PATH',
         value=':'.join([
+            os.path.join(Pkg_directory, 'models'),
+            str(Path(Pkg_directory).parent.resolve()),
             os.path.join(bringup_dir, 'world'),
             str(Path(bringup_dir).parent.resolve())
+        ])
+    )
+
+    gz_model_path = SetEnvironmentVariable(
+        name='GZ_SIM_MODEL_PATH',
+        value=':'.join([
+            os.path.join(Pkg_directory, 'models'),
+            str(Path(Pkg_directory).parent.resolve())
         ])
     )
 
@@ -129,11 +140,13 @@ def generate_launch_description():
             "-topic",
             "/robot_description",
             "-x",
-            "0",
+            "3.7",
             "-y",
-            "0",
+            "-1.6",
             "-z",
             "0.70",
+            "-Y",
+            "0.0",
         ],
         output="screen",
     )
@@ -148,6 +161,7 @@ def generate_launch_description():
     ld.add_action(DeclareLaunchArgument('urdf_file',default_value=os.path.join(bringup_dir, 'urdf', 'assembly_robot.urdf'),description='Whether to start RVIZ'))
     ld.add_action(DeclareLaunchArgument('use_robot_state_pub',default_value='True',description='Whether to start the robot state publisher'))
     ld.add_action(gz_resource_path)
+    ld.add_action(gz_model_path)
     ld.add_action(gz_sim)
     ld.add_action(bridge)
     ld.add_action(spawn_entity)

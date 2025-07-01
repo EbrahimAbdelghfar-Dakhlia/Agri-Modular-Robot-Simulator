@@ -209,7 +209,7 @@
         <limit>
           <lower>-inf</lower>
           <upper>inf</upper>
-          <velocity>0.349066</velocity>
+          <velocity>0.68</velocity>
         </limit>
         <dynamics>
           <damping>50</damping>
@@ -428,7 +428,7 @@
         <limit>
           <lower>-inf</lower>
           <upper>inf</upper>
-          <velocity>0.349066</velocity>
+          <velocity>0.68</velocity>
         </limit>
         <dynamics>
           <damping>50</damping>
@@ -647,7 +647,7 @@
         <limit>
           <lower>-inf</lower>
           <upper>inf</upper>
-          <velocity>0.349066</velocity>
+          <velocity>0.68</velocity>
         </limit>
         <dynamics>
           <damping>50</damping>
@@ -866,7 +866,7 @@
         <limit>
           <lower>-inf</lower>
           <upper>inf</upper>
-          <velocity>0.349066</velocity>
+          <velocity>0.68</velocity>
         </limit>
         <dynamics>
           <damping>50</damping>
