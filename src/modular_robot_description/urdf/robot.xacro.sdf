@@ -56,7 +56,7 @@
     </joint>
 
     <joint name='Lidar_Joint' type='fixed'>
-      <pose relative_to='base_link'>0.0 0.0 0.3 0 0 0</pose>
+      <pose relative_to='base_link'>0.0 0.0 0.1 0 0 0</pose>
       <parent>base_link</parent>
       <child>Lidar_Link</child>
     </joint>
@@ -121,6 +121,11 @@
             <resolution>0.01</resolution>
           </range>
           <frame_id>/Lidar_Link</frame_id>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <std_dev>0.05</std_dev>
+          </noise>
         </lidar>
         <always_on>1</always_on>
         <visualize>true</visualize>
@@ -1197,5 +1202,13 @@
       <topic>joints_feedback</topic>
     </plugin>
 
+    <plugin filename="ignition-gazebo-odometry-publisher-system"
+      name="ignition::gazebo::systems::OdometryPublisher">
+      <odom_frame>odom</odom_frame>
+      <odom_covariance_topic>odom</odom_covariance_topic>
+      <tf_topic>tf</tf_topic>
+      <robot_base_frame>base_link</robot_base_frame>
+      <odom_publish_frequency>100</odom_publish_frequency>
+    </plugin>
   </model>
 </sdf>
