@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 <sdf version="1.11" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <model name="modular_robot_description_2">
+
     <link name="base_link">
       <inertial>
         <pose>1.11022302462516e-16 0.0065769439857048303 -0.00114479574614862 0 0 0</pose>
@@ -53,6 +54,78 @@
         </dynamics>
       </axis>
     </joint>
+
+    <joint name='Lidar_Joint' type='fixed'>
+      <pose relative_to='base_link'>0.0 0.0 0.3 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>Lidar_Link</child>
+    </joint>
+    <link name='Lidar_Link'>
+      <pose relative_to='Lidar_Joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.00024020603328955801 -0.000120539643168349 0.015160467014908301 0 0 0</pose>
+        <mass>0.033905213761175397</mass>
+        <inertia>
+          <ixx>1.9418956525212101e-05</ixx>
+          <ixy>1.42920437917507e-09</ixy>
+          <ixz>4.0083322819600097e-08</ixz>
+          <iyy>1.9072702454059401e-05</iyy>
+          <iyz>-8.7342522288321605e-10</iyz>
+          <izz>3.6762895045010802e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name='Lidar_Link_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://modular_robot_description/meshes/visual/Lidar_Link.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='Lidar_Link_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://modular_robot_description/meshes/visual/Lidar_Link.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0 0 0 1</diffuse>
+          <ambient>0 0 0 1</ambient>
+        </material>
+      </visual>
+      <sensor name="Lidar" type="gpu_lidar">
+        <gz_frame_id>Lidar_Link</gz_frame_id>
+        <topic>scan</topic>
+        <update_rate>15</update_rate>
+        <lidar>
+          <scan>
+            <horizontal>
+              <samples>2800</samples>
+              <resolution>1</resolution>
+              <min_angle>-2.356194</min_angle>
+              <max_angle>2.356194</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>1</samples>
+              <resolution>0.1</resolution>
+              <min_angle>0.0</min_angle>
+              <max_angle>0.0</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.15</min>
+            <max>25</max>
+            <resolution>0.01</resolution>
+          </range>
+          <frame_id>/Lidar_Link</frame_id>
+        </lidar>
+        <always_on>1</always_on>
+        <visualize>true</visualize>
+      </sensor>
+    </link>
     <link name="frame">
       <pose relative_to="frame_joint">0 0 0 0 0 0</pose>
       <inertial>
