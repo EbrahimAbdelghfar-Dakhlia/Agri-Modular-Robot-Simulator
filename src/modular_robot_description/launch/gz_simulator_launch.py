@@ -12,7 +12,8 @@ from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from pathlib import Path
 from launch.conditions import IfCondition
-
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
+from launch_ros.substitutions import FindPackageShare
 def has_nvidia_gpu():
     """
     Check if the system has an NVIDIA GPU on Linux.
@@ -50,6 +51,26 @@ def generate_launch_description():
     sdf_file  =  os.path.join(bringup_dir, 'urdf', 'robot.xacro.sdf')
     with open(sdf_file, 'r') as infp:
         robot_desc = infp.read()
+
+    # Declare launch arguments
+    vel_driver_param_path_arg = DeclareLaunchArgument(
+        'vel_driver_param_path',
+        default_value=PathJoinSubstitution([
+            FindPackageShare('vel_driver'),
+            'config',
+            'vel_driver.yaml'
+        ]),
+        description='Path to the vel_driver parameter file'
+    )
+
+    # Create the node
+    vel_driver_node = Node(
+        package='vel_driver',
+        executable='vel_driver_node',
+        name='vel_driver',
+        output='screen',
+        parameters=[LaunchConfiguration('vel_driver_param_path')]
+    )
 
     start_robot_state_publisher_cmd = Node(
         package='robot_state_publisher',
@@ -169,5 +190,7 @@ def generate_launch_description():
     ld.add_action(tf_map)
     ld.add_action(joint_state_publisher)
     ld.add_action(robot_control)
+    ld.add_action(vel_driver_param_path_arg)
+    ld.add_action(vel_driver_node)
     # Launch!
     return ld
