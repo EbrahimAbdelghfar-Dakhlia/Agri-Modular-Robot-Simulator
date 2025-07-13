@@ -41,10 +41,10 @@ class RobotControlNode(Node):
         self.__fr_elevating_publisher = self.create_publisher(Float64, 'fr_elevating_pos_arm_joint',1)
         self.__fl_elevating_publisher = self.create_publisher(Float64, 'fl_elevating_pos_arm_joint',1)
         # Create a publisher for steering position arm joints in radians
-        self.__rr_steering_publisher = self.create_publisher(Float64, 'rr_steering_pos_arm_joint',1)
-        self.__rl_steering_publisher = self.create_publisher(Float64, 'rl_steering_pos_arm_joint',1)
-        self.__fr_steering_publisher = self.create_publisher(Float64, 'fr_steering_pos_arm_joint',1)
-        self.__fl_steering_publisher = self.create_publisher(Float64, 'fl_steering_pos_arm_joint',1)
+        self.__rr_steering_publisher = self.create_publisher(Float64, '/fwids/rear_right_steer_rad/command',1)
+        self.__rl_steering_publisher = self.create_publisher(Float64, '/fwids/rear_left_steer_rad/command',1)
+        self.__fr_steering_publisher = self.create_publisher(Float64, '/fwids/front_right_steer_rad/command',1)
+        self.__fl_steering_publisher = self.create_publisher(Float64, '/fwids/front_left_steer_rad/command',1)
         # create a publisher for the motor velocity in rad/sec
         self.__rr_motor_velocity_publisher = self.create_publisher(Float64, 'rr_motor_vel',1)
         self.__rl_motor_velocity_publisher = self.create_publisher(Float64, 'rl_motor_vel',1)
@@ -110,3 +110,6 @@ def main(args=None):
         robot_control_node.destroy_node()
         rclpy.shutdown()
     
+
+if __name__ == '__main__':
+    main()

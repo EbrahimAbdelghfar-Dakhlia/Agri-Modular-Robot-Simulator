@@ -283,7 +283,7 @@
       <parent>fl_elevating_arm</parent>
       <child>fl_steering_arm</child>
       <axis>
-        <xyz>0 0 1</xyz>
+        <xyz>0 0 -1</xyz>
         <limit>
           <lower>-inf</lower>
           <upper>inf</upper>
@@ -338,7 +338,7 @@
       <parent>fl_steering_arm</parent>
       <child>fl_wheel</child>
       <axis>
-        <xyz>0 0 -1</xyz>
+        <xyz>0 0 1</xyz>
         <limit>
           <lower>-inf</lower>
           <upper>inf</upper>
@@ -502,7 +502,7 @@
       <parent>fr_elevating_arm</parent>
       <child>fr_steering_arm</child>
       <axis>
-        <xyz>0 0 1</xyz>
+        <xyz>0 0 -1</xyz>
         <limit>
           <lower>-inf</lower>
           <upper>inf</upper>
@@ -557,7 +557,7 @@
       <parent>fr_steering_arm</parent>
       <child>fr_wheel</child>
       <axis>
-        <xyz>0 0 1</xyz>
+        <xyz>0 0 -1</xyz>
         <limit>
           <velocity>10.471976</velocity>
           <lower>-inf</lower>
@@ -721,7 +721,7 @@
       <parent>rl_elevating_arm</parent>
       <child>rl_steering_arm</child>
       <axis>
-        <xyz>0 0 1</xyz>
+        <xyz>0 0 -1</xyz>
         <limit>
           <lower>-inf</lower>
           <upper>inf</upper>
@@ -776,7 +776,7 @@
       <parent>rl_steering_arm</parent>
       <child>rl_wheel</child>
       <axis>
-        <xyz>0 0 -1</xyz>
+        <xyz>0 0 1</xyz>
         <limit>
           <lower>-inf</lower>
           <upper>inf</upper>
@@ -940,7 +940,7 @@
       <parent>rr_elevating_arm</parent>
       <child>rr_steering_arm</child>
       <axis>
-        <xyz>0 0 1</xyz>
+        <xyz>0 0 -1</xyz>
         <limit>
           <lower>-inf</lower>
           <upper>inf</upper>
