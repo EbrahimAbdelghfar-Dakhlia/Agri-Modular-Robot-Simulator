@@ -46,10 +46,10 @@ class RobotControlNode(Node):
         self.__fr_steering_publisher = self.create_publisher(Float64, '/fwids/front_right_steer_rad/command',1)
         self.__fl_steering_publisher = self.create_publisher(Float64, '/fwids/front_left_steer_rad/command',1)
         # create a publisher for the motor velocity in rad/sec
-        self.__rr_motor_velocity_publisher = self.create_publisher(Float64, 'rr_motor_vel',1)
-        self.__rl_motor_velocity_publisher = self.create_publisher(Float64, 'rl_motor_vel',1)
-        self.__fr_motor_velocity_publisher = self.create_publisher(Float64, 'fr_motor_vel',1)
-        self.__fl_motor_velocity_publisher = self.create_publisher(Float64, 'fl_motor_vel',1)
+        self.__rr_motor_velocity_publisher = self.create_publisher(Float64, '/fwids/rear_right_rotor_radpersec/command',1)
+        self.__rl_motor_velocity_publisher = self.create_publisher(Float64, '/fwids/rear_left_rotor_radpersec/command',1)
+        self.__fr_motor_velocity_publisher = self.create_publisher(Float64, '/fwids/front_right_rotor_radpersec/command',1)
+        self.__fl_motor_velocity_publisher = self.create_publisher(Float64, '/fwids/front_left_rotor_radpersec/command',1)
         # Create a timer to publish
 
     def setMotorVelocity(self, velocity:Float64MultiArray):
@@ -95,9 +95,9 @@ class RobotControlNode(Node):
 
         # Publish the motor velocity
         self.__rr_motor_velocity_publisher.publish(Float64(data=self.motor_velocity_rad_sec[0]))
-        self.__rl_motor_velocity_publisher.publish(Float64(data=-1*self.motor_velocity_rad_sec[1]))
-        self.__fr_motor_velocity_publisher.publish(Float64(data=-1*self.motor_velocity_rad_sec[2]))
-        self.__fl_motor_velocity_publisher.publish(Float64(data=-1*self.motor_velocity_rad_sec[3]))
+        self.__rl_motor_velocity_publisher.publish(Float64(data=self.motor_velocity_rad_sec[1]))
+        self.__fr_motor_velocity_publisher.publish(Float64(data=self.motor_velocity_rad_sec[2]))
+        self.__fl_motor_velocity_publisher.publish(Float64(data=self.motor_velocity_rad_sec[3]))
 
 def main(args=None):
     rclpy.init(args=args)
