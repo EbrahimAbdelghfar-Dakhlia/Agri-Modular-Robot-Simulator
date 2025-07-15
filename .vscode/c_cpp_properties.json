@@ -6,7 +6,23 @@
         "limitSymbolsToIncludedHeaders": false
       },
       "includePath": [
+        "/home/ebrahim/Agri-Modular-Robot-Simulator/install/turtlebot4_node/include/**",
+        "/home/ebrahim/Agri-Modular-Robot-Simulator/install/turtlebot4_msgs/include/**",
+        "/home/ebrahim/Agri-Modular-Robot-Simulator/install/teleop_twist_joy/include/**",
+        "/home/ebrahim/Agri-Modular-Robot-Simulator/install/reference_costmap_generator/include/**",
+        "/home/ebrahim/Agri-Modular-Robot-Simulator/install/mppi_h/include/**",
+        "/home/ebrahim/Agri-Modular-Robot-Simulator/install/mppi_4d/include/**",
+        "/home/ebrahim/Agri-Modular-Robot-Simulator/install/mppi_3d/include/**",
+        "/home/ebrahim/Agri-Modular-Robot-Simulator/install/mppi_eval_msgs/include/**",
         "/opt/ros/jazzy/include/**",
+        "/home/ebrahim/Agri-Modular-Robot-Simulator/src/autonomous/control/mppi_3d/include/**",
+        "/home/ebrahim/Agri-Modular-Robot-Simulator/src/autonomous/control/mppi_4d/include/**",
+        "/home/ebrahim/Agri-Modular-Robot-Simulator/src/autonomous/control/mppi_eval_msgs/include/**",
+        "/home/ebrahim/Agri-Modular-Robot-Simulator/src/autonomous/control/mppi_h/include/**",
+        "/home/ebrahim/Agri-Modular-Robot-Simulator/src/autonomous/planning/reference_costmap_generator/include/**",
+        "/home/ebrahim/Agri-Modular-Robot-Simulator/src/autonomous/turtlebot4/turtlebot4_node/include/**",
+        "/home/ebrahim/Agri-Modular-Robot-Simulator/src/operation/joy_controller/include/**",
+        "/home/ebrahim/Agri-Modular-Robot-Simulator/src/teleop_twist_joy/include/**",
         "/home/ebrahim/Agri-Modular-Robot-Simulator/src/vel_driver/include/**",
         "/usr/include/**"
       ],
