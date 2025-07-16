@@ -1,11 +1,15 @@
 cmake_minimum_required(VERSION 3.8)
 project(mppi_h)
+# Default to C++17
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 17)
+endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-
+option(USE_OPENMP "USE_OPENMP" ON) # ON / OFF
 # Find packages
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
@@ -24,69 +28,60 @@ find_package(grid_map_visualization REQUIRED)
 find_package(mppi_eval_msgs REQUIRED)
 find_package(Eigen3 REQUIRED)
 
-# Load OpenMP if enabled
+# load openmp
 if(USE_OPENMP)
   find_package(OpenMP REQUIRED)
   if(OpenMP_FOUND)
-    message(WARNING "OpenMP found. Activate CPU acceleration.")
-  else()
-    message(FATAL_ERROR "Unable to find OpenMP library.")
+      message(WARNING "OpenMP found. Activate CPU acceleration.")
+      set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+  endif()
+  if(NOT OPENMP_FOUND)
+      message(FATAL_ERROR "Unable to find OpenMP library.")
   endif()
 endif()
+
+set(dependencies
+  rclcpp
+  geometry_msgs
+  visualization_msgs
+  rviz_2d_overlay_msgs
+  nav_msgs
+  tf2
+  tf2_geometry_msgs
+  tf2_ros
+  grid_map_core
+  grid_map_ros
+  grid_map_filters
+  grid_map_msgs
+  grid_map_visualization
+  mppi_eval_msgs
+)
 
 add_library(mppi_h_core SHARED src/mppi_h_core.cpp)
 add_library(mppi_mode1_core SHARED src/mode1_mppi_3d/mppi_3d_core.cpp)
 add_library(mppi_mode2_core SHARED src/mode2_mppi_4d/mppi_4d_core.cpp)
 
+## link openmp
+if(USE_OPENMP)
+  if (OPENMP_FOUND)
+      if (TARGET OpenMP::OpenMP_CXX)
+          target_link_libraries(mppi_mode1_core PUBLIC OpenMP::OpenMP_CXX)
+          target_link_libraries(mppi_mode2_core PUBLIC OpenMP::OpenMP_CXX)
+      endif()
+  endif()
+endif()
+
 ament_target_dependencies(mppi_mode1_core PUBLIC
-  rclcpp
-  geometry_msgs
-  visualization_msgs
-  rviz_2d_overlay_msgs
-  nav_msgs
-  tf2
-  tf2_geometry_msgs
-  tf2_ros
-  grid_map_core
-  grid_map_ros
-  grid_map_filters
-  grid_map_msgs
-  grid_map_visualization
-  mppi_eval_msgs
+  ${dependencies}
 )
 
 ament_target_dependencies(mppi_mode2_core PUBLIC
-  rclcpp
-  geometry_msgs
-  visualization_msgs
-  rviz_2d_overlay_msgs
-  nav_msgs
-  tf2
-  tf2_geometry_msgs
-  tf2_ros
-  grid_map_core
-  grid_map_ros
-  grid_map_filters
-  grid_map_msgs
-  grid_map_visualization
-  mppi_eval_msgs
+  ${dependencies}
 )
 
 ament_target_dependencies(mppi_h_core PUBLIC
-  rclcpp
-  geometry_msgs
-  visualization_msgs
-  rviz_2d_overlay_msgs
-  nav_msgs
-  tf2
-  tf2_geometry_msgs
-  tf2_ros
-  grid_map_core
-  grid_map_ros
-  grid_map_filters
-  grid_map_msgs
-  grid_map_visualization
-  mppi_eval_msgs
+  ${dependencies}
 )
 
 target_include_directories(mppi_h_core PUBLIC ${EIGEN3_INCLUDE_DIR})
@@ -107,33 +102,10 @@ target_include_directories(mppi_mode2_core PUBLIC
   $<INSTALL_INTERFACE:include>
 )
 
-
-if(USE_OPENMP)
-  if (OPENMP_FOUND)
-      if (TARGET OpenMP::OpenMP_CXX)
-          target_link_libraries(mppi_mode1_core PUBLIC OpenMP::OpenMP_CXX)
-          target_link_libraries(mppi_mode2_core PUBLIC OpenMP::OpenMP_CXX)
-      endif()
-  endif()
-endif()
-
 # Declare a C++ executable
 add_executable(${PROJECT_NAME}_node src/mppi_h_node.cpp src/mppi_h.cpp)
 ament_target_dependencies(${PROJECT_NAME}_node PUBLIC
-  rclcpp
-  geometry_msgs
-  visualization_msgs
-  rviz_2d_overlay_msgs
-  nav_msgs
-  tf2
-  tf2_geometry_msgs
-  tf2_ros
-  grid_map_core
-  grid_map_ros
-  grid_map_filters
-  grid_map_msgs
-  grid_map_visualization
-  mppi_eval_msgs
+  ${dependencies}
 )
 target_link_libraries(${PROJECT_NAME}_node PUBLIC 
 mppi_h_core
@@ -171,4 +143,6 @@ install(
 install(DIRECTORY include/
   DESTINATION include
 )
+## Export dependencies
+ament_export_dependencies(${dependencies})
 ament_package()

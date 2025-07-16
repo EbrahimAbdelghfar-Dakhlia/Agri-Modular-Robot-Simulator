@@ -105,8 +105,8 @@
             <horizontal>
               <samples>32000</samples>
               <resolution>1</resolution>
-              <min_angle>-2.356194</min_angle>
-              <max_angle>2.356194</max_angle>
+              <min_angle>0</min_angle>
+              <max_angle>6.283185</max_angle>
             </horizontal>
             <vertical>
               <samples>1</samples>
@@ -283,11 +283,11 @@
       <parent>fl_elevating_arm</parent>
       <child>fl_steering_arm</child>
       <axis>
-        <xyz>0 0 -1</xyz>
+        <xyz>0 0 1</xyz>
         <limit>
           <lower>-inf</lower>
           <upper>inf</upper>
-          <velocity>0.68</velocity>
+          <velocity>2.68</velocity>
         </limit>
         <dynamics>
           <damping>50</damping>
@@ -502,11 +502,11 @@
       <parent>fr_elevating_arm</parent>
       <child>fr_steering_arm</child>
       <axis>
-        <xyz>0 0 -1</xyz>
+        <xyz>0 0 1</xyz>
         <limit>
           <lower>-inf</lower>
           <upper>inf</upper>
-          <velocity>0.68</velocity>
+          <velocity>2.68</velocity>
         </limit>
         <dynamics>
           <damping>50</damping>
@@ -721,11 +721,11 @@
       <parent>rl_elevating_arm</parent>
       <child>rl_steering_arm</child>
       <axis>
-        <xyz>0 0 -1</xyz>
+        <xyz>0 0 1</xyz>
         <limit>
           <lower>-inf</lower>
           <upper>inf</upper>
-          <velocity>0.68</velocity>
+          <velocity>2.68</velocity>
         </limit>
         <dynamics>
           <damping>50</damping>
@@ -940,11 +940,11 @@
       <parent>rr_elevating_arm</parent>
       <child>rr_steering_arm</child>
       <axis>
-        <xyz>0 0 -1</xyz>
+        <xyz>0 0 1</xyz>
         <limit>
           <lower>-inf</lower>
           <upper>inf</upper>
-          <velocity>0.68</velocity>
+          <velocity>2.68</velocity>
         </limit>
         <dynamics>
           <damping>50</damping>
