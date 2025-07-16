@@ -1,4 +1,5 @@
 #include "reference_costmap_generator/reference_costmap_generator.hpp"
+#include <rclcpp/qos.hpp>
 
 namespace planning
 {
@@ -25,7 +26,14 @@ namespace planning
 
         // initialize subscribers
         sub_ref_path_ = this->create_subscription<nav_msgs::msg::Path>(ref_path_topic, 1, std::bind(&ReferenceCostmapGenerator::refPathCallback, this, std::placeholders::_1));
-        sub_map_ = this->create_subscription<nav_msgs::msg::OccupancyGrid>(map_topic, 1, std::bind(&ReferenceCostmapGenerator::mapCallback, this, std::placeholders::_1));
+        
+        // Create QoS profile for map subscriber
+        rclcpp::QoS map_qos(1);
+        map_qos.reliability(rclcpp::ReliabilityPolicy::Reliable);
+        map_qos.history(rclcpp::HistoryPolicy::KeepLast);
+        map_qos.durability(rclcpp::DurabilityPolicy::TransientLocal);
+        
+        sub_map_ = this->create_subscription<nav_msgs::msg::OccupancyGrid>(map_topic, map_qos, std::bind(&ReferenceCostmapGenerator::mapCallback, this, std::placeholders::_1));
 
         // initialize publishers
         pub_goal_pose_marker_ = this->create_publisher<visualization_msgs::msg::Marker>(goal_pose_marker_topic,1);
@@ -45,15 +53,14 @@ namespace planning
         // save the latest reference path as nav_msgs::Path type
         latest_ref_path_ = *msg;
 
-        // publish goal pose marker
-        //// publishGoalPoseArrowMarker(); // publish arrow marker
-        publishGoalPoseSphereMarker(); // publish sphere marker
-
         if (!map_received_ || !ref_path_received_)
         {
             RCLCPP_WARN(this->get_logger(), "[ReferenceCostmapGenerator] not all necessary data are received, map: %d, ref_path: %d", map_received_, ref_path_received_);
             return;
         }
+        // publish goal pose marker
+        //// publishGoalPoseArrowMarker(); // publish arrow marker
+        publishGoalPoseSphereMarker(); // publish sphere marker
 
         // publish distance error map
         publishDistanceErrorMap();
