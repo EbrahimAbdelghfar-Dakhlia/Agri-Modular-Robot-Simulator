@@ -1,7 +1,7 @@
 vel_driver:
   ros__parameters:
     # subscribing topic names
-    control_cmd_vel_topic: /cmd_vel_mppi
+    control_cmd_vel_topic: /cmd_vel
     extention_length_topic: /extending_in_meter_controller
     # publishing topic names
     front_left_steer_cmd_topic: /fwids/front_left_steer_rad/command

@@ -9,7 +9,7 @@ mppi_h:
     distance_error_map_topic: /distance_error_map
     ref_yaw_map_topic: /ref_yaw_map
     ## publishing topics
-    control_cmd_vel_topic: /cmd_vel_mppi
+    control_cmd_vel_topic: /cmd_vel
     mppi_absvel_topic: /mppi/cmd/absvel
     mppi_vx_topic: /mppi/cmd/vx
     mppi_vy_topic: /mppi/cmd/vy
