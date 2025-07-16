@@ -167,7 +167,7 @@ def generate_launch_description():
             "-z",
             "0.70",
             "-Y",
-            "0.0",
+            "-1.57",
         ],
         output="screen",
     )
@@ -189,7 +189,7 @@ def generate_launch_description():
     ld.add_action(start_robot_state_publisher_cmd)
     ld.add_action(tf_map)
     ld.add_action(joint_state_publisher)
-    ld.add_action(robot_control)
+    # ld.add_action(robot_control)
     ld.add_action(vel_driver_param_path_arg)
     ld.add_action(vel_driver_node)
     # Launch!

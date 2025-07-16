@@ -56,9 +56,6 @@ VelDriver::VelDriver()
     sub_cmd_vel_ = this->create_subscription<geometry_msgs::msg::Twist>(
         control_cmd_vel_topic, 1, std::bind(&VelDriver::cmdVelCallback, this, std::placeholders::_1));
 
-    sub_extension_length_ = this->create_subscription<std_msgs::msg::Float64>(
-        extention_length_topic, 1, std::bind(&VelDriver::extensionLengthCallback, this, std::placeholders::_1));
-
     // initialize publishers
     pub_cmd_front_left_steer = this->create_publisher<std_msgs::msg::Float64>(front_left_steer_cmd_topic, 10);
     pub_cmd_front_right_steer = this->create_publisher<std_msgs::msg::Float64>(front_right_steer_cmd_topic, 10);
@@ -74,11 +71,6 @@ VelDriver::VelDriver()
 VelDriver::~VelDriver()
 {
     // No Contents
-}
-
-void VelDriver::extensionLengthCallback(const std_msgs::msg::Float64::SharedPtr msg)
-{
-    extension_length = msg->data;
 }
 
 // /cmd_vel topic callback

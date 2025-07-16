@@ -15,8 +15,6 @@ namespace gazebo
             void extensionLengthCallback(const std_msgs::msg::Float64::SharedPtr msg);
         private:
             rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr sub_cmd_vel_;
-            rclcpp::Subscription<std_msgs::msg::Float64>::SharedPtr sub_extension_length_;
-
             rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr pub_cmd_front_left_steer, pub_cmd_front_right_steer, pub_cmd_rear_left_steer, pub_cmd_rear_right_steer;
             rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr pub_cmd_front_left_rotor, pub_cmd_front_right_rotor, pub_cmd_rear_left_rotor, pub_cmd_rear_right_rotor;
             std_msgs::msg::Float64 cmd_front_left_steer, cmd_front_right_steer, cmd_rear_left_steer, cmd_rear_right_steer;
