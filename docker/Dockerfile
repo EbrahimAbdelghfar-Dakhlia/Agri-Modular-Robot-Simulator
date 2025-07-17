@@ -38,7 +38,7 @@ USER root
         apt-get install ros-${ROS_DISTRO}-control* -y &&\
         apt-get install ros-${ROS_DISTRO}-irob* -y &&\
         apt-get install ros-${ROS_DISTRO}-ament* -y &&\
-        apt-get install ros-${ROS_DISTRO}-rivz* -y &&\
+        apt-get install ros-${ROS_DISTRO}-rviz* -y &&\
         rm -rf /var/lib/apt/lists/*
 
     # disable sudo password for ubuntu user
