@@ -52,15 +52,15 @@ namespace planning
         RCLCPP_WARN(this->get_logger(), "[ReferenceCostmapGenerator] not all necessary data are received, map: %d", latest_map_.getFrameId());
         // save the latest reference path as nav_msgs::Path type
         latest_ref_path_ = *msg;
+        // publish goal pose marker
+        //// publishGoalPoseArrowMarker(); // publish arrow marker
+        publishGoalPoseSphereMarker(); // publish sphere marker
 
         if (!map_received_ || !ref_path_received_)
         {
             RCLCPP_WARN(this->get_logger(), "[ReferenceCostmapGenerator] not all necessary data are received, map: %d, ref_path: %d", map_received_, ref_path_received_);
             return;
         }
-        // publish goal pose marker
-        //// publishGoalPoseArrowMarker(); // publish arrow marker
-        publishGoalPoseSphereMarker(); // publish sphere marker
 
         // publish distance error map
         publishDistanceErrorMap();
