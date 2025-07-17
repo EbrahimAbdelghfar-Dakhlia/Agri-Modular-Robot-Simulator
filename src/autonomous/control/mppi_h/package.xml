@@ -20,6 +20,7 @@
   <depend>grid_map_core</depend>
   <depend>grid_map_filters</depend>
   <depend>grid_map_msgs</depend>
+  <depend>libomp-dev</depend>
   <depend>grid_map_cmake_helpers</depend>
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
 project(mppi_h)
+
+option(USE_OPENMP "USE_OPENMP" ON) # ON / OFF
 # Default to C++17
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 17)
@@ -9,7 +11,6 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-option(USE_OPENMP "USE_OPENMP" ON) # ON / OFF
 # Find packages
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
@@ -37,7 +38,7 @@ if(USE_OPENMP)
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
   endif()
   if(NOT OPENMP_FOUND)
-      message(FATAL_ERROR "Unable to find OpenMP library.")
+      message(FATAL ERROR "Unable to find OpenMP library.")
   endif()
 endif()
 
