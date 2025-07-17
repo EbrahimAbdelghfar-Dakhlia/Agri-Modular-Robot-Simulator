@@ -41,6 +41,11 @@ USER root
         apt-get install ros-${ROS_DISTRO}-rviz* -y &&\
         rm -rf /var/lib/apt/lists/*
 
+    RUN apt-get update -y &&\
+        apt-get install -y ros-${ROS_DISTRO}-rmw-cyc* &&\
+        rm -rf /var/lib/apt/lists/*
+
+    ENV RMW_IMPLEMENTATION rmw_cyclonedds_cpp
     # disable sudo password for ubuntu user
     ENV USER=ubuntu
     RUN usermod -aG sudo ubuntu
@@ -48,7 +53,15 @@ USER root
         echo ubuntu ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/ubuntu \
         && chmod 0440 /etc/sudoers.d/ubuntu \
         && chown -R ubuntu:ubuntu /home/ubuntu \
-        && chmod -R 777 /home/ubuntu
+        && chmod 777 -R /home/ubuntu
+
+    RUN sudo add-apt-repository universe -y &&\
+        sudo apt-get update -y &&\
+        sudo apt-get install -y python3-pip &&\
+        rm -rf /var/lib/apt/lists/*
+
+    RUN pip3 install shapely --break-system-packages
+
 
 USER ubuntu
     WORKDIR /home/ubuntu

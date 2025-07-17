@@ -65,7 +65,7 @@ target_include_directories(reference_costmap_generator PUBLIC
 if(USE_OPENMP)
   if (OPENMP_FOUND)
       if (TARGET OpenMP::OpenMP_CXX)
-          target_link_libraries(reference_costmap_generator OpenMP::OpenMP_CXX)
+          target_link_libraries(reference_costmap_generator PUBLIC OpenMP::OpenMP_CXX)
       endif()
   endif()
 endif()

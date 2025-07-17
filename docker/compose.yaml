@@ -17,6 +17,7 @@ services:
       - ../src:/home/ubuntu/Agri-Modular-Robot-Simulator/src # mount the source code directory
       - ../lemon_field_occ_grid.pgm:/home/ubuntu/Agri-Modular-Robot-Simulator/lemon_field_occ_grid.pgm # mount the occupancy grid file
       - ../lemon_field_occ_grid.yaml:/home/ubuntu/Agri-Modular-Robot-Simulator/lemon_field_occ_grid.yaml # mount the occupancy grid file
+      - ../Makefile:/home/ubuntu/Agri-Modular-Robot-Simulator/Makefile # mount the Makefile
       - ~/.Xauthority:/root/.Xauthority # share the Xauthority file with the host
       - /tmp/.X11-unix:/tmp/.X11-unix:rw # share the X11 socket with the host
       - /dev:/dev # share the devices with the host
@@ -29,4 +30,4 @@ services:
     runtime: nvidia
     container_name: mppi_container_jazzy # name of the container that will be created
     restart: no # do not restart the container automatically
-    entrypoint: bash # use bash as the entrypoint
+    entrypoint: ["bash", "-c", "sudo chmod 777 -R /home/ubuntu && source /opt/ros/jazzy/setup.bash && /bin/bash"] # command to run when the container starts
