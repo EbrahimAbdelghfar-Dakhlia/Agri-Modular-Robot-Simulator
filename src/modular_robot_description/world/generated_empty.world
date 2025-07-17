@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<!-- Seed: 4020 -->
+<sdf version="1.9">
+  <world name="virtual_maize_field">
+    <!-- Change max step size to increase the simulation speed but decrease the accuracy. -->
+    <physics type="ode">
+      <real_time_update_rate>1000.0</real_time_update_rate>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <render_engine>ogre2</render_engine>
+    <!-- <plugin name='gz::sim::systems::JointController' filename='gz-sim-joint-controller-system'/> -->
+    <plugin name='gz::sim::systems::Physics' filename='gz-sim-physics-system'/>
+    <plugin name='gz::sim::systems::UserCommands' filename='gz-sim-user-commands-system'/>
+    <plugin name='gz::sim::systems::SceneBroadcaster' filename='gz-sim-scene-broadcaster-system'/>
+    <plugin name='gz::sim::systems::Contact' filename='gz-sim-contact-system'/>
+    <plugin name='gz::sim::systems::Imu' filename='gz-sim-imu-system'/>
+    <plugin name='gz::sim::systems::AirPressure' filename='gz-sim-air-pressure-system'/>
+    <plugin filename="gz-sim-navsat-system" name="gz::sim::systems::NavSat"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <gui fullscreen="0">
+        <!-- 3D scene -->
+      <plugin filename="GzScene3D" name="3D View">
+      <ignition-gui>
+          <title>3D View</title>
+          <property type="bool" key="showTitleBar">false</property>
+          <property type="string" key="state">docked</property>
+      </ignition-gui>
+
+    <engine>ogre2</engine>
+      <scene>scene</scene>
+      <ambient_light>1.0 1.0 1.0</ambient_light>
+      <background_color>0.8 0.8 0.8</background_color>
+      <camera_pose>-6 0 6 0 0.5 0</camera_pose>
+    </plugin>
+
+    <!-- World control -->
+    <plugin filename="WorldControl" name="World control">
+      <ignition-gui>
+        <title>World control</title>
+        <property type="bool" key="showTitleBar">false</property>
+        <property type="bool" key="resizable">false</property>
+        <property type="double" key="height">72</property>
+        <property type="double" key="width">121</property>
+        <property type="double" key="z">1</property>
+
+        <property type="string" key="state">floating</property>
+        <anchors target="3D View">
+          <line own="left" target="left"/>
+          <line own="bottom" target="bottom"/>
+        </anchors>
+      </ignition-gui>
+
+      <play_pause>true</play_pause>
+      <step>true</step>
+      <service>/world/virtual_maize_field/control</service>
+      <stats_topic>/world/virtual_maize_field/stats</stats_topic>
+
+    </plugin>
+
+    <!-- World statistics -->
+    <plugin filename="WorldStats" name="World stats">
+        <ignition-gui>
+            <title>World stats</title>
+            <property type="bool" key="showTitleBar">false</property>
+            <property type="bool" key="resizable">false</property>
+            <property type="double" key="height">110</property>
+            <property type="double" key="width">290</property>
+            <property type="double" key="z">1</property>
+
+            <property type="string" key="state">floating</property>
+            <anchors target="3D View">
+            <line own="right" target="right"/>
+            <line own="bottom" target="bottom"/>
+            </anchors>
+        </ignition-gui>
+
+        <sim_time>true</sim_time>
+        <real_time>true</real_time>
+        <real_time_factor>true</real_time_factor>
+        <iterations>true</iterations>
+        <topic>/world/virtual_maize_field/stats</topic>
+
+    </plugin>
+
+    <!-- Entity tree -->
+    <plugin filename="EntityTree" name="Entity tree">
+    </plugin>
+  </gui>
+
+    <light type="directional" name="sun">
+      <!-- Disable shadows to avoid flickering on non-gpu pc, see: 
+           https://github.com/gazebosim/gz-sim/issues/2267 -->
+      <cast_shadows>false</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <scene>
+      <sky>
+        <clouds>
+          <speed>12</speed>
+        </clouds>
+      </sky>
+      <grid>false</grid>
+    </scene>
+
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>27.9162477</latitude_deg>
+      <longitude_deg>30.5634376</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+
+    <model name="heightmap">
+      <static>true</static>
+      <link name="link">
+        <visual name="ground_plane">
+          <geometry>
+            <heightmap>
+              <use_terrain_paging>false</use_terrain_paging>
+              <texture>
+                <diffuse>model://materials/textures/grass_color.jpg</diffuse>
+                <normal>model://materials/textures/grass_normal.jpg</normal>
+                <size>4</size>
+              </texture>
+              <texture>
+                <diffuse>model://materials/textures/dirt_diffusespecular.png</diffuse>
+                <normal>model://materials/textures/flat_normal.png</normal>
+                <size>1</size>
+              </texture>
+              <!-- <texture>
+                <diffuse>model://materials/textures/grass_color.jpg</diffuse>
+                <normal>model://materials/textures/grass_normal.jpg</normal>
+                <size>4</size>
+              </texture> -->
+              <!-- Without this unused 3. texture the blend between the first 2 doesn"t work -->
+              <texture>
+                <diffuse>model://materials/textures/fungus_diffusespecular.png</diffuse>
+                <normal>model://materials/textures/flat_normal.png</normal>
+                <size>1</size>
+              </texture>
+              <blend>
+                <min_height>0.0001</min_height>
+                <fade_dist>0.05</fade_dist>
+              </blend>
+              <!-- <blend>
+                <min_height>0.00010000000000000002</min_height>
+                <fade_dist>0.05</fade_dist>
+              </blend> -->
+              <!-- Without this unused 3. texture the blend between the first 2 doesn"t work -->
+              <blend>
+                <min_height>4</min_height>
+                <fade_dist>5</fade_dist>
+              </blend>
+              <uri>/home/ebrahim/.ros/virtual_maize_field/virtual_maize_field_heightmap.png</uri>
+              <size>134.0 134.0 0.00015000000000000001</size>
+              <pos>0 0 0</pos>
+            </heightmap>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <heightmap>
+              <uri>/home/ebrahim/.ros/virtual_maize_field/virtual_maize_field_heightmap.png</uri>
+              <size>134.0 134.0 0.00015000000000000001</size>
+              <pos>0 0 0</pos>
+            </heightmap>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+     
+    <include>
+      <uri>model://natroon_lemon_tree</uri>
+      <pose>9.866476507742183 56.238252516984616 7.103021574895225e-05 0.0 0.0 4.992239174701836</pose>
+      <name>natroon_lemon_tree_0050</name>
+      <static>true</static>
+    </include> 
+    </world>
+</sdf>
