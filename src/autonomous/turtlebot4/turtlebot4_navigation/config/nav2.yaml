@@ -27,9 +27,9 @@ controller_server:
     FollowPath:
       plugin: teb_local_planner::TebLocalPlannerROS
       teb_autosize: 1.0
-      dt_ref: 0.3
+      dt_ref: 1.0
       dt_hysteresis: 0.1
-      max_samples: 10000
+      max_samples: 100000
       global_plan_overwrite_orientation: True
       max_global_plan_lookahead_dist: 1.0
       # Robot
