@@ -47,7 +47,7 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time')
     Pkg_directory = get_package_share_directory('virtual_maize_field') #this is the package name that contains the models
     bringup_dir = get_package_share_directory('modular_robot_description')
-    world = os.path.join(bringup_dir , "world", "generated_empty.world")
+    world = os.path.join(bringup_dir , "world", "generated.world")
     sdf_file  =  os.path.join(bringup_dir, 'urdf', 'robot.xacro.sdf')
     with open(sdf_file, 'r') as infp:
         robot_desc = infp.read()
