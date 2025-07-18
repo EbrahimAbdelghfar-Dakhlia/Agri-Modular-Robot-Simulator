@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.8)
 project(reference_costmap_generator)
 
-# parameters
-option(USE_OPENMP "USE_OPENMP" ON) # ON / OFF
+# Best practice: Explicitly set the C++ standard. ROS2 requires C++17.
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 17)
 endif()
 
+# Best practice: Enable common compiler warnings for cleaner code.
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
@@ -22,6 +22,7 @@ find_package(rclcpp REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
+find_package(eigen3_cmake_module REQUIRED)
 find_package(Eigen3 REQUIRED)
 
 # load openmp
@@ -36,6 +37,8 @@ if(USE_OPENMP)
       message(FATAL ERROR "Unable to find OpenMP library.")
   endif()
 endif()
+# Set include directories for all targets in this project
+include_directories(include)
 
 add_library(reference_costmap_generator SHARED src/reference_costmap_generator.cpp)
 target_include_directories(reference_costmap_generator PUBLIC
@@ -56,22 +59,14 @@ ament_target_dependencies(reference_costmap_generator PUBLIC
   tf2_ros
 )
 
-target_link_libraries(reference_costmap_generator PUBLIC ${EIGEN3_INCLUDE_DIR})
-target_include_directories(reference_costmap_generator PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>
-)
-
-if(USE_OPENMP)
-  if (OPENMP_FOUND)
-      if (TARGET OpenMP::OpenMP_CXX)
-          target_link_libraries(reference_costmap_generator PUBLIC OpenMP::OpenMP_CXX)
-      endif()
-  endif()
+target_link_libraries(reference_costmap_generator PUBLIC Eigen3::Eigen)
+# Link OpenMP if enabled
+if(USE_OPENMP AND OpenMP_FOUND)
+  message(WARNING "linking the OpenMP library.")
+  target_link_libraries(reference_costmap_generator PUBLIC OpenMP::OpenMP_CXX)
 endif()
 
 add_executable(${PROJECT_NAME}_node src/reference_costmap_generator_node.cpp)
-target_link_libraries(${PROJECT_NAME}_node PUBLIC reference_costmap_generator)
 
 ament_target_dependencies(${PROJECT_NAME}_node PUBLIC
   rclcpp
@@ -86,19 +81,50 @@ ament_target_dependencies(${PROJECT_NAME}_node PUBLIC
   tf2_ros
 )
 
-install(DIRECTORY launch config
-  DESTINATION share/${PROJECT_NAME}
-)
-install(TARGETS reference_costmap_generator
+target_link_libraries(${PROJECT_NAME}_node PUBLIC reference_costmap_generator)
+# -- Installation Rules --
+
+# Install the compiled library and executable targets.
+# The EXPORT keyword creates a CMake export set, making the library target
+# available for other packages to link against.
+install(TARGETS
+  reference_costmap_generator
+  ${PROJECT_NAME}_node
+  EXPORT export_reference_costmap_generator # Name of the export set
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
-)
-install(TARGETS ${PROJECT_NAME}_node
-  RUNTIME DESTINATION lib/${PROJECT_NAME}
-)
-install(DIRECTORY include/
-  DESTINATION include
+  RUNTIME DESTINATION lib/${PROJECT_NAME} # A common pattern for node executables
+  INCLUDES DESTINATION include
 )
 
+# Install non-code artifacts like launch and config files.
+# The destination is relative to the install root, typically 'install/<pkg_name>/'.
+install(
+  DIRECTORY launch config
+  DESTINATION share/${PROJECT_NAME}
+)
+
+# -- Exporting for Downstream Packages --
+# These commands replace the functionality of catkin_package().
+
+# Export the library targets defined in the install() EXPORT clause.
+# This allows other packages to use `ament_target_dependencies` on this package.
+ament_export_targets(export_reference_costmap_generator HAS_LIBRARY_TARGET)
+
+# Export the list of dependencies that are part of this package's public API.
+# Downstream packages will automatically have these dependencies available.
+ament_export_dependencies(
+  rclcpp
+  grid_map_core
+  grid_map_ros
+  nav_msgs
+  tf2
+  tf2_ros
+  tf2_geometry_msgs
+  Eigen3
+)
+
+# This must be the VERY LAST command in the file.
+# It collects all the exported information and generates the necessary
+# CMake config files and resource index markers for the ament build system.
 ament_package()

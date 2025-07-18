@@ -305,7 +305,7 @@
           <lower>-3.14159</lower>
           <upper>3.14159</upper>
           <effort>100</effort>
-          <velocity>5</velocity>
+          <velocity>10</velocity>
         </limit>
       </axis>
     </joint>
@@ -492,7 +492,7 @@
           <lower>-3.14159</lower>
           <upper>3.14159</upper>
           <effort>100</effort>
-          <velocity>5</velocity>
+          <velocity>10</velocity>
         </limit>
       </axis>
     </joint>
@@ -679,7 +679,7 @@
           <lower>-3.14159</lower>
           <upper>3.14159</upper>
           <effort>100</effort>
-          <velocity>5</velocity>
+          <velocity>10</velocity>
         </limit>
       </axis>
     </joint>
@@ -866,7 +866,7 @@
           <lower>-3.14159</lower>
           <upper>3.14159</upper>
           <effort>100</effort>
-          <velocity>5</velocity>
+          <velocity>10</velocity>
         </limit>
       </axis>
     </joint>
@@ -887,9 +887,8 @@
       name="gz::sim::systems::JointPositionController">
       <joint_name>front_right_wheel_steer_joint</joint_name>
       <topic>fr_steering_pos_arm_joint</topic>
-      <p_gain>50</p_gain>
-      <i_gain>5</i_gain>
-      <d_gain>1</d_gain>
+      <use_velocity_commands>true</use_velocity_commands>
+      <cmd_max>10.0</cmd_max> <cmd_min>-10.0</cmd_min>
     </plugin>
 
     <plugin
@@ -897,9 +896,8 @@
       name="gz::sim::systems::JointPositionController">
       <joint_name>front_left_wheel_steer_joint</joint_name>
       <topic>fl_steering_pos_arm_joint</topic>
-      <p_gain>50</p_gain>
-      <i_gain>5</i_gain>
-      <d_gain>1</d_gain>
+      <use_velocity_commands>true</use_velocity_commands>
+      <cmd_max>10.0</cmd_max> <cmd_min>-10.0</cmd_min>
     </plugin>
 
     <plugin
@@ -907,9 +905,8 @@
       name="gz::sim::systems::JointPositionController">
       <joint_name>rear_right_wheel_steer_joint</joint_name>
       <topic>rr_steering_pos_arm_joint</topic>
-      <p_gain>50</p_gain>
-      <i_gain>5</i_gain>
-      <d_gain>1</d_gain>
+      <use_velocity_commands>true</use_velocity_commands>
+      <cmd_max>10.0</cmd_max> <cmd_min>-10.0</cmd_min>
     </plugin>
 
     <plugin
@@ -917,9 +914,8 @@
       name="gz::sim::systems::JointPositionController">
       <joint_name>rear_left_wheel_steer_joint</joint_name>
       <topic>rl_steering_pos_arm_joint</topic>
-      <p_gain>50</p_gain>
-      <i_gain>5</i_gain>
-      <d_gain>1</d_gain>
+      <use_velocity_commands>true</use_velocity_commands>
+      <cmd_max>10.0</cmd_max> <cmd_min>-10.0</cmd_min>
     </plugin>
 
     <plugin

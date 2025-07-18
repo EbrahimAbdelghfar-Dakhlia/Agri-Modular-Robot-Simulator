@@ -24,21 +24,24 @@ namespace planning
         this->declare_parameter<std::string>("ref_yaw_map_topic", "/ref_yaw_map");
         std::string ref_yaw_map_topic = this->get_parameter("ref_yaw_map_topic").as_string();
 
+        // create QOS profile for the path
+        rclcpp::QoS path_qos(1);
+        path_qos.reliability(rclcpp::ReliabilityPolicy::Reliable);
+        path_qos.durability(rclcpp::DurabilityPolicy::Volatile);
         // initialize subscribers
-        sub_ref_path_ = this->create_subscription<nav_msgs::msg::Path>(ref_path_topic, 1, std::bind(&ReferenceCostmapGenerator::refPathCallback, this, std::placeholders::_1));
-        
+        sub_ref_path_ = this->create_subscription<nav_msgs::msg::Path>(ref_path_topic, path_qos, std::bind(&ReferenceCostmapGenerator::refPathCallback, this, std::placeholders::_1));
+
         // Create QoS profile for map subscriber
         rclcpp::QoS map_qos(1);
         map_qos.reliability(rclcpp::ReliabilityPolicy::Reliable);
-        map_qos.history(rclcpp::HistoryPolicy::KeepLast);
         map_qos.durability(rclcpp::DurabilityPolicy::TransientLocal);
         
         sub_map_ = this->create_subscription<nav_msgs::msg::OccupancyGrid>(map_topic, map_qos, std::bind(&ReferenceCostmapGenerator::mapCallback, this, std::placeholders::_1));
 
         // initialize publishers
-        pub_goal_pose_marker_ = this->create_publisher<visualization_msgs::msg::Marker>(goal_pose_marker_topic,1);
-        pub_distance_error_map_ = this->create_publisher<grid_map_msgs::msg::GridMap>(distance_error_map_topic,1);
-        pub_ref_yaw_map_ = this->create_publisher<grid_map_msgs::msg::GridMap>(ref_yaw_map_topic, 1);
+        pub_goal_pose_marker_ = this->create_publisher<visualization_msgs::msg::Marker>(goal_pose_marker_topic,10);
+        pub_distance_error_map_ = this->create_publisher<grid_map_msgs::msg::GridMap>(distance_error_map_topic,10);
+        pub_ref_yaw_map_ = this->create_publisher<grid_map_msgs::msg::GridMap>(ref_yaw_map_topic,10);
     }
 
     ReferenceCostmapGenerator::~ReferenceCostmapGenerator()
@@ -72,8 +75,6 @@ namespace planning
     void ReferenceCostmapGenerator::mapCallback(const nav_msgs::msg::OccupancyGrid::SharedPtr msg)
     {
         map_received_ = true;
-        //print log info
-        RCLCPP_INFO(this->get_logger(), "[ReferenceCostmapGenerator] map received");
         // save the latest map as grid_map::GridMap type
         grid_map::GridMapRosConverter::fromOccupancyGrid(*msg, "map", latest_map_);
     }
@@ -143,15 +144,12 @@ namespace planning
 
     void ReferenceCostmapGenerator::publishDistanceErrorMap()
     {
-        // generate distance error map
-        grid_map::GridMap distance_error_map_({"distance_error"});
-        distance_error_map_.setFrameId(latest_map_.getFrameId()); // usually "map"
-        distance_error_map_.setGeometry(latest_map_.getLength(), latest_map_.getResolution() * map_resolution_scale_);
-        rclcpp::Time time = this->get_clock()->now();
-        distance_error_map_.setTimestamp(time.nanoseconds());
+        grid_map::GridMap distance_error_map({"distance_error"});
+        distance_error_map.setFrameId(latest_map_.getFrameId());
+        distance_error_map.setGeometry(latest_map_.getLength(), latest_map_.getResolution() * map_resolution_scale_, latest_map_.getPosition());
+        distance_error_map.setTimestamp(this->get_clock()->now().nanoseconds());
 
-        // for each cell in the map, calculate the distance to the nearest point in the reference path
-        const auto grid_size = distance_error_map_.getSize();
+        const auto grid_size = distance_error_map.getSize();
         const unsigned int linear_grid_size = grid_size.prod();
 
         // create map
@@ -160,34 +158,23 @@ namespace planning
         for (int i = 0; i < linear_grid_size; i++){
             // get current index
             const grid_map::Index index(grid_map::getIndexFromLinearIndex(i, grid_size));
-
-            // get the position of the cell
             grid_map::Position position;
+            distance_error_map.getPosition(index, position);
 
-            // get position using int i
-            distance_error_map_.getPosition(index, position);
-
-            // calculate the distance to the nearest point in the reference path
-            double distance = std::numeric_limits<double>::max();
-            for (int i = 0; i < latest_ref_path_.poses.size(); i++)
-            {
-                // calculate the distance to the point i in the reference path
-                double dx = position.x() - latest_ref_path_.poses[i].pose.position.x;
-                double dy = position.y() - latest_ref_path_.poses[i].pose.position.y;
-                double d = sqrt(dx * dx + dy * dy);
-
-                // if the current target point i is the nearest point so far
-                if (d < distance)
-                {
-                    // update the minimum distance
-                    distance = d;
+            double min_distance_sq = std::numeric_limits<double>::max();
+            for (const auto& pose_stamped : latest_ref_path_.poses) {
+                double dx = position.x() - pose_stamped.pose.position.x;
+                double dy = position.y() - pose_stamped.pose.position.y;
+                double d_sq = dx * dx + dy * dy;
+                if (d_sq < min_distance_sq) {
+                    min_distance_sq = d_sq;
                 }
             }
-            // set the distance to the distance error map
-            distance_error_map_.at("distance_error", index) = distance;
+            distance_error_map.at("distance_error", index) = std::sqrt(min_distance_sq);
         }
-        // publish distance error map
-        pub_distance_error_map_->publish(grid_map::GridMapRosConverter::toMessage(distance_error_map_));
+
+        auto msg = grid_map::GridMapRosConverter::toMessage(distance_error_map);
+        pub_distance_error_map_->publish(std::move(msg));
     }
 
     void ReferenceCostmapGenerator::publishReferenceYawMap()

@@ -46,9 +46,9 @@ mppi_h:
 
       mode1: # mode one: mppi_3d
         name: "[mode 1] mppi_3d_b"
-        num_samples: 6000 # number of samples
+        num_samples: 100 # number of samples
         param_exploration: 0.1
-        param_lambda: 200.0
+        param_lambda: 100.0
         param_alpha: 0.975
         sigma: [0.55, 0.55, 0.96] # noise for [vx, vy, omega]
         reduce_computation: true # if true, noise sampling is done only once and the same noise is used for all processes.
@@ -66,7 +66,7 @@ mppi_h:
 
       mode2: # mode two: mppi_4d
         name: "[mode 2] mppi_4d"
-        num_samples: 6000 # number of samples
+        num_samples: 100 # number of samples
         param_exploration: 0.1 #
         param_lambda: 100.0
         param_alpha: 0.975

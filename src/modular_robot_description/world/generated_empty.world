@@ -130,62 +130,30 @@
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
 
-    <model name="heightmap">
+    <model name="ground_plane">
       <static>true</static>
       <link name="link">
-        <visual name="ground_plane">
-          <geometry>
-            <heightmap>
-              <use_terrain_paging>false</use_terrain_paging>
-              <texture>
-                <diffuse>model://materials/textures/grass_color.jpg</diffuse>
-                <normal>model://materials/textures/grass_normal.jpg</normal>
-                <size>4</size>
-              </texture>
-              <texture>
-                <diffuse>model://materials/textures/dirt_diffusespecular.png</diffuse>
-                <normal>model://materials/textures/flat_normal.png</normal>
-                <size>1</size>
-              </texture>
-              <!-- <texture>
-                <diffuse>model://materials/textures/grass_color.jpg</diffuse>
-                <normal>model://materials/textures/grass_normal.jpg</normal>
-                <size>4</size>
-              </texture> -->
-              <!-- Without this unused 3. texture the blend between the first 2 doesn"t work -->
-              <texture>
-                <diffuse>model://materials/textures/fungus_diffusespecular.png</diffuse>
-                <normal>model://materials/textures/flat_normal.png</normal>
-                <size>1</size>
-              </texture>
-              <blend>
-                <min_height>0.0001</min_height>
-                <fade_dist>0.05</fade_dist>
-              </blend>
-              <!-- <blend>
-                <min_height>0.00010000000000000002</min_height>
-                <fade_dist>0.05</fade_dist>
-              </blend> -->
-              <!-- Without this unused 3. texture the blend between the first 2 doesn"t work -->
-              <blend>
-                <min_height>4</min_height>
-                <fade_dist>5</fade_dist>
-              </blend>
-              <uri>/home/ebrahim/.ros/virtual_maize_field/virtual_maize_field_heightmap.png</uri>
-              <size>134.0 134.0 0.00015000000000000001</size>
-              <pos>0 0 0</pos>
-            </heightmap>
-          </geometry>
-        </visual>
         <collision name="collision">
           <geometry>
-            <heightmap>
-              <uri>/home/ebrahim/.ros/virtual_maize_field/virtual_maize_field_heightmap.png</uri>
-              <size>134.0 134.0 0.00015000000000000001</size>
-              <pos>0 0 0</pos>
-            </heightmap>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>1000 1000</size>
+            </plane>
           </geometry>
         </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>1000 1000</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.8 0.8 0.8 1</specular>
+          </material>
+        </visual>
       </link>
     </model>
 

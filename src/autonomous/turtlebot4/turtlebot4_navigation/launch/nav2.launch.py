@@ -31,7 +31,7 @@ from launch_ros.actions import PushRosNamespace, SetRemap
 
 
 ARGUMENTS = [
-    DeclareLaunchArgument('use_sim_time', default_value='false',
+    DeclareLaunchArgument('use_sim_time', default_value='true',
                           choices=['true', 'false'],
                           description='Use sim time'),
     DeclareLaunchArgument('params_file',
@@ -64,7 +64,7 @@ def launch_setup(context, *args, **kwargs):
         PushRosNamespace(namespace),
         SetRemap(namespace_str + '/global_costmap/scan', namespace_str + '/scan'),
         SetRemap(namespace_str + '/local_costmap/scan', namespace_str + '/scan'),
-        SetRemap(namespace_str + '/cmd_vel', namespace_str + '/cmd_vel_test'),
+        # SetRemap(namespace_str + '/cmd_vel', namespace_str + '/no_use/cmd_vel'),
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(launch_nav2),
