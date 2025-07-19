@@ -4,7 +4,7 @@ bt_navigator:
     global_frame: map
     robot_base_frame: base_link
     odom_topic: odom
-    bt_loop_duration: 1
+    bt_loop_duration: 0.1
     default_server_timeout: 20
     wait_for_service_timeout: 1000
     action_server_result_timeout: 900.0
@@ -46,7 +46,7 @@ controller_server:
       yaw_goal_tolerance: 0.1
       free_goal_vel: False
       # Obstacles
-      min_obstacle_dist: 0.1
+      min_obstacle_dist: 0.8
       include_costmap_obstacles: True
       costmap_obstacles_behind_robot_dist: 1.0
       obstacle_poses_affected: 30
