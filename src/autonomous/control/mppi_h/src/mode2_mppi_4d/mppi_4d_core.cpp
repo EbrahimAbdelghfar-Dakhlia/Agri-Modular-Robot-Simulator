@@ -257,14 +257,14 @@ Samples MPPI4DCore::calcWeightsOfSamples(const Samples& costs)
     // calculate eta
     // [CPU Acceleration with OpenMP]
     double eta = 0.0;
-    #pragma omp parallel for num_threads(omp_get_max_threads())
+    // #pragma omp parallel for num_threads(omp_get_max_threads())
     for (int k = 0; k < K; k++)
     {
         eta += std::exp( (-1.0/ param_.controller.param_lambda) * (costs[k] - min_cost) );
     }
 
     // calculate weight for each sample
-    #pragma omp parallel for num_threads(omp_get_max_threads())
+    // #pragma omp parallel for num_threads(omp_get_max_threads())
     for (int k = 0; k < K; k++)
     {
         weights[k] = (1.0 / eta) * std::exp( (-1.0/ param_.controller.param_lambda) * (costs[k] - min_cost) );
