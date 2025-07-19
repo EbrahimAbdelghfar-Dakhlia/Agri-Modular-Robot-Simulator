@@ -34,7 +34,6 @@ find_package(tf2_ros REQUIRED)
 find_package(grid_map_core REQUIRED)
 find_package(grid_map_ros REQUIRED)
 find_package(grid_map_msgs REQUIRED)
-find_package(grid_map_rviz_plugin REQUIRED)
 find_package(grid_map_visualization REQUIRED)
 find_package(mppi_eval_msgs REQUIRED)
 
@@ -66,7 +65,6 @@ set(dependencies
   grid_map_core
   grid_map_ros
   grid_map_msgs
-  grid_map_rviz_plugin
   grid_map_visualization
   mppi_eval_msgs
 )
