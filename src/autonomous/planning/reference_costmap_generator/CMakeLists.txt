@@ -1,16 +1,28 @@
 cmake_minimum_required(VERSION 3.8)
 project(reference_costmap_generator)
 
-# Best practice: Explicitly set the C++ standard. ROS2 requires C++17.
+# Default to C++17
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 17)
 endif()
 
-# Best practice: Enable common compiler warnings for cleaner code.
-if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  add_compile_options(-Wall -Wextra -Wpedantic)
+# Optimization flags for performance
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
 endif()
 
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+  # Add optimization flags for Release build
+  if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    add_compile_options(-O3 -march=native -DNDEBUG)
+  endif()
+endif()
+
+# parameters
+option(USE_OPENMP "USE_OPENMP" ON) # ON / OFF
+
+# find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(grid_map_core REQUIRED)
 find_package(grid_map_filters REQUIRED)
@@ -22,7 +34,9 @@ find_package(rclcpp REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
-find_package(eigen3_cmake_module REQUIRED)
+find_package(visualization_msgs REQUIRED)
+
+# use eigen3 (matrix computation library)
 find_package(Eigen3 REQUIRED)
 
 # load openmp
@@ -41,10 +55,6 @@ endif()
 include_directories(include)
 
 add_library(reference_costmap_generator SHARED src/reference_costmap_generator.cpp)
-target_include_directories(reference_costmap_generator PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>
-)
 
 ament_target_dependencies(reference_costmap_generator PUBLIC
   grid_map_core

@@ -1,35 +1,44 @@
 cmake_minimum_required(VERSION 3.8)
 project(mppi_h)
 
-# Set the C++ standard to ensure compatibility and consistent builds
+# Default to C++17
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 17)
 endif()
 
+# Optimization flags for performance
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
+  # Add optimization flags for Release build
+  if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    add_compile_options(-O3 -march=native -DNDEBUG)
+  endif()
 endif()
-# Parameters
-option(USE_OPENMP "Enable OpenMP for CPU acceleration" ON)
 
-# Find packages
+# parameters
+option(USE_OPENMP "USE_OPENMP" ON) # ON / OFF
+
+## Find ament packages
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(visualization_msgs REQUIRED)
-find_package(rviz_2d_overlay_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(grid_map_core REQUIRED)
 find_package(grid_map_ros REQUIRED)
-find_package(grid_map_filters REQUIRED)
 find_package(grid_map_msgs REQUIRED)
+find_package(grid_map_rviz_plugin REQUIRED)
 find_package(grid_map_visualization REQUIRED)
 find_package(mppi_eval_msgs REQUIRED)
-# For Eigen3, use the eigen3_cmake_module for robust discovery across systems.
-find_package(eigen3_cmake_module REQUIRED)
+
+# use eigen3 (matrix computation library)
 find_package(Eigen3 REQUIRED)
 
 # load openmp
@@ -44,109 +53,89 @@ if(USE_OPENMP)
       message(FATAL ERROR "Unable to find OpenMP library.")
   endif()
 endif()
-# Set include directories for all targets in this project
-include_directories(include)
 
+# Define dependencies for ament
 set(dependencies
   rclcpp
   geometry_msgs
   visualization_msgs
-  rviz_2d_overlay_msgs
   nav_msgs
   tf2
   tf2_geometry_msgs
   tf2_ros
   grid_map_core
   grid_map_ros
-  grid_map_filters
   grid_map_msgs
+  grid_map_rviz_plugin
   grid_map_visualization
   mppi_eval_msgs
 )
 
-# Declare C++ libraries
+###########
+## Build ##
+###########
+
+## Specify additional locations of header files
+## Your package locations should be listed before other locations
+include_directories(
+  include
+  ${EIGEN3_INCLUDE_DIR}
+)
+
+## Declare a C++ library
 add_library(mppi_h_core SHARED src/mppi_h_core.cpp)
 add_library(mppi_mode1_core SHARED src/mode1_mppi_3d/mppi_3d_core.cpp)
 add_library(mppi_mode2_core SHARED src/mode2_mppi_4d/mppi_4d_core.cpp)
-# Target-specific include directories
-target_include_directories(mppi_h_core PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>
-)
-target_include_directories(mppi_mode1_core PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>
-)
-target_include_directories(mppi_mode2_core PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>
-)
-# Link Eigen3 to libraries that require it using modern CMake targets
-target_link_libraries(mppi_h_core PUBLIC Eigen3::Eigen)
-target_link_libraries(mppi_mode1_core PUBLIC Eigen3::Eigen)
-target_link_libraries(mppi_mode2_core PUBLIC Eigen3::Eigen)
 
-# Link OpenMP to the specific libraries that use it
-if(USE_OPENMP AND OpenMP_FOUND)
-  target_link_libraries(mppi_mode1_core PUBLIC OpenMP::OpenMP_CXX)
-  target_link_libraries(mppi_mode2_core PUBLIC OpenMP::OpenMP_CXX)
+## link openmp
+if(USE_OPENMP)
+  if (OPENMP_FOUND)
+      if (TARGET OpenMP::OpenMP_CXX)
+          target_link_libraries(mppi_mode1_core OpenMP::OpenMP_CXX)
+          target_link_libraries(mppi_mode2_core OpenMP::OpenMP_CXX)
+      endif()
+  endif()
 endif()
 
-# Declare the C++ executable
+## Declare a C++ executable
+## With catkin_make all packages are built within a single CMake context
+## The recommended prefix ensures that target names across packages don't collide
 add_executable(${PROJECT_NAME}_node src/mppi_h_node.cpp src/mppi_h.cpp)
 
-ament_target_dependencies(mppi_mode1_core PUBLIC
-  ${dependencies}
-)
+## Add ament target dependencies
+ament_target_dependencies(${PROJECT_NAME}_node ${dependencies})
+ament_target_dependencies(mppi_h_core ${dependencies})
+ament_target_dependencies(mppi_mode1_core ${dependencies})
+ament_target_dependencies(mppi_mode2_core ${dependencies})
 
-ament_target_dependencies(mppi_mode2_core PUBLIC
-  ${dependencies}
-)
-
-ament_target_dependencies(mppi_h_core PUBLIC
-  ${dependencies}
-)
-
-# Use target_link_libraries for libraries built in this package
-target_link_libraries(${PROJECT_NAME}_node PUBLIC
+## Specify libraries to link a library or executable target against
+target_link_libraries(${PROJECT_NAME}_node
   mppi_h_core
   mppi_mode1_core
   mppi_mode2_core
 )
 
-install(TARGETS
-  mppi_h_core
-  mppi_mode1_core
-  mppi_mode2_core
-  EXPORT export_${PROJECT_NAME}
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
-  INCLUDES DESTINATION include
-)
-
-ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
-ament_export_dependencies(
-  ${dependencies}
-)
 #############
 ## Install ##
 #############
 
-# Install the main node executable
+## Install executables
 install(TARGETS ${PROJECT_NAME}_node
   DESTINATION lib/${PROJECT_NAME}
 )
 
-# Install public headers
-install(DIRECTORY include/
-  DESTINATION include
+## Install libraries
+install(TARGETS mppi_h_core mppi_mode1_core mppi_mode2_core
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
 )
 
-# Install launch and config files
-install(DIRECTORY launch config
-  DESTINATION share/${PROJECT_NAME}
+## Install directories
+install(
+  DIRECTORY launch config include/
+  DESTINATION share/${PROJECT_NAME}/
 )
 
-# This MUST be the last call in the file
+## Export ament package
 ament_package()
