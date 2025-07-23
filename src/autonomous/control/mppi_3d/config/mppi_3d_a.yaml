@@ -2,9 +2,9 @@ mppi_3d:
   ros__parameters:
     # topic names
     ## subscribing topics
-    odom_topic: /groundtruth_odom
-    ref_path_topic: /move_base/NavfnROS/plan
-    collision_costmap_topic: /move_base/local_costmap/costmap
+    odom_topic: /odom
+    ref_path_topic: /plan
+    collision_costmap_topic: /local_costmap/costmap
     distance_error_map_topic: /distance_error_map
     ref_yaw_map_topic: /ref_yaw_map
     ## publishing topics

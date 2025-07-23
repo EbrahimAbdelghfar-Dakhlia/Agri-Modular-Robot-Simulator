@@ -304,7 +304,7 @@
         <limit>
           <lower>-3.14159</lower>
           <upper>3.14159</upper>
-          <effort>100</effort>
+          <effort>500</effort>
           <velocity>10</velocity>
         </limit>
       </axis>
@@ -472,7 +472,7 @@
         <limit>
           <lower>-0.02</lower>
           <upper>0.02</upper>
-          <effort>100</effort>
+          <effort>500</effort>
           <velocity>1.0</velocity>
         </limit>
         <dynamics>
@@ -491,7 +491,7 @@
         <limit>
           <lower>-3.14159</lower>
           <upper>3.14159</upper>
-          <effort>100</effort>
+          <effort>500</effort>
           <velocity>10</velocity>
         </limit>
       </axis>
@@ -659,7 +659,7 @@
         <limit>
           <lower>-0.02</lower>
           <upper>0.02</upper>
-          <effort>100</effort>
+          <effort>500</effort>
           <velocity>1.0</velocity>
         </limit>
         <dynamics>
@@ -678,7 +678,7 @@
         <limit>
           <lower>-3.14159</lower>
           <upper>3.14159</upper>
-          <effort>100</effort>
+          <effort>500</effort>
           <velocity>10</velocity>
         </limit>
       </axis>
@@ -846,7 +846,7 @@
         <limit>
           <lower>-0.02</lower>
           <upper>0.02</upper>
-          <effort>100</effort>
+          <effort>500</effort>
           <velocity>1.0</velocity>
         </limit>
         <dynamics>
@@ -865,7 +865,7 @@
         <limit>
           <lower>-3.14159</lower>
           <upper>3.14159</upper>
-          <effort>100</effort>
+          <effort>500</effort>
           <velocity>10</velocity>
         </limit>
       </axis>

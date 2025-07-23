@@ -110,31 +110,31 @@ MPPI::MPPI()
 
     // initialize subscribers
     sub_odom_ = this->create_subscription<nav_msgs::msg::Odometry>(
-        odom_topic, 10, std::bind(&MPPI::odomCallback, this, std::placeholders::_1));
+        odom_topic, 1, std::bind(&MPPI::odomCallback, this, std::placeholders::_1));
     odom_received_ = false;
     sub_ref_path_ = this->create_subscription<nav_msgs::msg::Path>(
-        ref_path_topic, 10, std::bind(&MPPI::refPathCallback, this, std::placeholders::_1));
+        ref_path_topic, 1, std::bind(&MPPI::refPathCallback, this, std::placeholders::_1));
     ref_path_received_ = false;
     sub_collision_costmap_ = this->create_subscription<nav_msgs::msg::OccupancyGrid>(
-        collision_costmap_topic, 10, std::bind(&MPPI::collisionCostmapCallback, this, std::placeholders::_1));
+        collision_costmap_topic, 1, std::bind(&MPPI::collisionCostmapCallback, this, std::placeholders::_1));
     collision_costmap_received_ = false;
     sub_distance_error_map_ = this->create_subscription<grid_map_msgs::msg::GridMap>(
-        distance_error_map_topic, 10, std::bind(&MPPI::distanceErrorMapCallback, this, std::placeholders::_1));
+        distance_error_map_topic, 1, std::bind(&MPPI::distanceErrorMapCallback, this, std::placeholders::_1));
     distance_error_map_received_ = false;
     sub_ref_yaw_map_ = this->create_subscription<grid_map_msgs::msg::GridMap>(
-        ref_yaw_map_topic, 10, std::bind(&MPPI::refYawMapCallback, this, std::placeholders::_1));
+        ref_yaw_map_topic, 1, std::bind(&MPPI::refYawMapCallback, this, std::placeholders::_1));
     ref_yaw_map_received_ = false;
 
     // initialize publishers
-    pub_cmd_vel_ = this->create_publisher<geometry_msgs::msg::Twist>(control_cmd_vel_topic, 10);
-    pub_cmd_absvel_ = this->create_publisher<std_msgs::msg::Float32>(mppi_absvel_topic, 10);
-    pub_cmd_vx_ = this->create_publisher<std_msgs::msg::Float32>(mppi_vx_topic, 10);
-    pub_cmd_vy_ = this->create_publisher<std_msgs::msg::Float32>(mppi_vy_topic, 10);
-    pub_cmd_omega_ = this->create_publisher<std_msgs::msg::Float32>(mppi_omega_topic, 10);
-    pub_mppi_calc_time_ = this->create_publisher<std_msgs::msg::Float32>(calc_time_topic, 10);
-    pub_mppi_optimal_traj_ = this->create_publisher<visualization_msgs::msg::MarkerArray>(mppi_optimal_traj_topic, 10);
-    pub_mppi_sampled_traj_ = this->create_publisher<visualization_msgs::msg::MarkerArray>(mppi_sampled_traj_topic, 10);
-    pub_mppi_eval_msg_ = this->create_publisher<mppi_eval_msgs::msg::MPPIEval>(mppi_eval_msg_topic, 10);
+    pub_cmd_vel_ = this->create_publisher<geometry_msgs::msg::Twist>(control_cmd_vel_topic, 1);
+    pub_cmd_absvel_ = this->create_publisher<std_msgs::msg::Float32>(mppi_absvel_topic, 1);
+    pub_cmd_vx_ = this->create_publisher<std_msgs::msg::Float32>(mppi_vx_topic, 1);
+    pub_cmd_vy_ = this->create_publisher<std_msgs::msg::Float32>(mppi_vy_topic, 1);
+    pub_cmd_omega_ = this->create_publisher<std_msgs::msg::Float32>(mppi_omega_topic, 1);
+    pub_mppi_calc_time_ = this->create_publisher<std_msgs::msg::Float32>(calc_time_topic, 1);
+    pub_mppi_optimal_traj_ = this->create_publisher<visualization_msgs::msg::MarkerArray>(mppi_optimal_traj_topic, 1);
+    pub_mppi_sampled_traj_ = this->create_publisher<visualization_msgs::msg::MarkerArray>(mppi_sampled_traj_topic, 1);
+    pub_mppi_eval_msg_ = this->create_publisher<mppi_eval_msgs::msg::MPPIEval>(mppi_eval_msg_topic, 1);
 
     // initialize timer
     timer_control_interval_ = this->create_wall_timer(
@@ -256,7 +256,7 @@ void MPPI::calcControlCommand()
     std_msgs::msg::Float32 calc_time;
     calc_time.data = mppi_core_->getCalcTime();
     pub_mppi_calc_time_->publish(calc_time);
-    
+
     // publish velocity command info
     std_msgs::msg::Float32 absvel, vx, vy, omega;
     absvel.data = sqrt(pow(optimal_cmd.vx, 2) + pow(optimal_cmd.vy, 2));
